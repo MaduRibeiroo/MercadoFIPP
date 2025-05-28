@@ -49,7 +49,7 @@
                         <div>
                             <h2>Buscar anuncio e perguntar</h2>
                             <p>No processo de tratamento de água, a temperatura é um fator crítico. Ela afeta a eficiência das reações químicas e biológicas, como a coagulação, sedimentação e desinfecção. Águas mais frias tendem a retardar esses processos, enquanto águas mais quentes aceleram as reações.</p>
-                            <button class="btn-box" style="margin-top: 10px;">BUSCAR</button>
+                            <button class="btn-box" style="margin-top: 10px;" @click="irParaBuscaAnuncios">BUSCAR</button>
                         </div>
                     </div>
                 </div>
@@ -77,6 +77,9 @@ export default {
   methods: {
     irParaFormAnuncio() {
       this.$router.push('/form-anuncio/anuncio');
+    },
+    irParaBuscaAnuncios(){
+        this.$router.push('/buscarAnuncios')
     }
   }
 }
