@@ -128,7 +128,7 @@ export default {
           const usuario = usuarios.find(u => u.nome === this.nome && u.senha === this.senha);
           if (usuario) {
             localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-            this.$router.push('/tela-adm/' + usuario.nome);
+            this.$router.push('/view-adm/' + usuario.nome);
           } else {
             this.erro = 'Usuário ou senha inválidos.';
           }
