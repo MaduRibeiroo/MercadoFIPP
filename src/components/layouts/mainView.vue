@@ -67,24 +67,22 @@
 import FormAnuncio from '../forms/FormAnuncio.vue';
 import FormCategoria from '../forms/FormCategoria.vue';
 import FormUsuario from '../forms/FormUsuario.vue';
+import buscarAnuncios from './buscarAnuncios.vue';
 
 export default {
   name: 'App',
   components: {
-    FormCategoria, FormUsuario, FormAnuncio
+    FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios
   },
   methods: {
     irParaFormAnuncio() {
       this.$router.push('/form-anuncio/anuncio');
     },
-<<<<<<< HEAD
-  
     irParaCategoria() {
       this.$router.push('/view-cat');
-=======
+    },
     irParaBuscaAnuncios(){
-        this.$router.push('/buscarAnuncios')
->>>>>>> 7295a327f19d689b050e445b2b85e2ed4d328747
+        this.$router.push('/buscarAnuncios');
     }
   }
 }
