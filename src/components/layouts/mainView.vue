@@ -4,8 +4,7 @@
             <a href="#" class="logo">Mercado FIPP</a>
     
             <nav class="navbarra">
-              <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
-              <a style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
+              <a style="--i:2">USUARIO</a>
                 <!--<a href="#id-home" style="--i:1" class="active">Home</a>
                 <a href="#id-sobre" style="--i:2">Sobre</a>
                 <a href="#id-relatorio" style="--i:3">Relatório</a>
@@ -22,15 +21,15 @@
         <span class="home-imgHover"></span>
         </section>
     
-        <section style="margin-top: 100px;" class="sobre" id="id-sobre">
+        <section style="margin-top: -150px;" class="sobre" id="id-sobre">
             <div class="sobre-img">
-                <img src="/src/assets/lobo.png">
+                <img src="../../assets/lobo.png">
             </div>
             <div class="sobre-texto">
                 <h2>Sobre o <span>Mercado FIPP</span></h2>
                 <p>Aqui, você pode criar seu perfil, publicar anúncios em diversas categorias, adicionar fotos dos seus produtos e tirar dúvidas diretamente com os vendedores por meio de perguntas e respostas nos anúncios. Nosso objetivo é facilitar a negociação entre os usuários, promovendo um ambiente colaborativo e eficiente. Explore as categorias, publique seu anúncio e aproveite tudo que o Mercado FIPP tem a oferecer!</p>
-                <p style="margin-top: -30px;">Deseja se cadastrar um usuário?</p>
-                <a class="btn-box"><router-link to="/form-usuario/Usuário">Usuário</router-link></a>
+                <p style="margin-top: -30px;">Deseja verificar quais as categorias existentes?</p>
+                <a class="btn-box" @click="irParaCategoria">Categoria</a>
             </div>
         </section>
     
@@ -77,6 +76,10 @@ export default {
   methods: {
     irParaFormAnuncio() {
       this.$router.push('/form-anuncio/anuncio');
+    },
+  
+    irParaCategoria() {
+      this.$router.push('/view-cat');
     }
   }
 }

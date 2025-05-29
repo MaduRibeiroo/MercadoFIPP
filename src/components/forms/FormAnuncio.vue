@@ -1,6 +1,6 @@
 <template>
   <h1 class="sub-title" style="margin-top: 100px;"><span>Anuncio</span></h1>
-      <div class="hello" style="width: 50%; margin-left: auto; margin-right: auto; margin-bottom: 200px;">git
+      <div class="hello" style="width: 50%; margin-left: auto; margin-right: auto; margin-bottom: 200px;">
       <div v-if="formOn">
         <form @submit.prevent="this.gravar()">
           <label for="idanun">Id</label>

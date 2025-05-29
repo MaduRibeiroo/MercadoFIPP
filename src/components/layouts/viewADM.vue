@@ -5,7 +5,7 @@
     
             <nav class="navbarra">
               <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
-              <a style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
+              <a style="--i:2">ADMIN</a>
                 <!--<a href="#id-home" style="--i:1" class="active">Home</a>
                 <a href="#id-sobre" style="--i:2">Sobre</a>
                 <a href="#id-relatorio" style="--i:3">Relatório</a>
