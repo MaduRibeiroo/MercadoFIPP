@@ -11,17 +11,19 @@
         <main class="main-content">
             <div class="formContent">
                 <h1 class="sub-title">ANÚNCIOS</h1>
-                <h4 class="sub-title">Busque o anúncio pelo nome</h4>
+                <p class="sub-title">Busque o anúncio pelo nome</p>
                 <form class="form-pesquisa" @submit.prevent="buscarTitulo">
                     <input type="text" id="buscar" placeholder="Digite o título..." v-model="titulo">
                     <button id="botaoPesquisar" type="submit">Pesquisar</button>
+                    <p v-if="mensagem" style="color: #ff9999; margin-top: 20px;">{{ mensagem }}</p>
                 </form>
             </div>
             <div class="divAnuncios">
                 <div v-for="anu in this.anuncios" :key="anu.id" class="cards" @click="irParaAnuncioIndividual(anu)">
                     <h3>{{ anu.titulo}}</h3>
                     <h5>{{ anu.descricao}}</h5>
-                    <p>Categoria: {{anu.catusu.nome}}</p>
+                    <h4>R$ {{ anu.preco }}</h4>
+                    <button class="">Acessar produto</button>
                 </div>
             </div>
         </main>
@@ -37,24 +39,32 @@ export default{
         msg: String
     },
     data(){
-      return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[], formOn:false,
+      return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[], mensagem:"", formOn:false,
       anuncios:[]}
     },
+    created() {
+        this.carregarDados();
+    },
     methods:{
-        carregarDados(){
+        carregarDados(){   //ok
             axios.get("http://localhost:8080/apis/anuncio")
             .then(result=>{
                 this.anuncios=result.data
-            }).catch(erros=>{
-                alert(error)
+            }).catch(error=>{
+              this.mensagem = "Anuncio nao encontrado";
             })
         },
         buscarTitulo(){
-            axios.get("http://localhost:8080/apis/anuncio/"+this.titulo)
+            axios.get("http://localhost:8080/apis/anuncio/buscarTitulo", {
+              params: {
+                  titulo: this.titulo
+              }
+            })
             .then(result=>{
-                this.anuncios=result.data
-            }).catch(erro=>{
-                alert(error)
+                this.anuncios=result.data;
+                this.mensagem="";
+            }).catch(error=>{
+                this.mensagem = "Anuncio nao encontrado";
             })
         },
         irParaAnuncioIndividual(anuncio) {
@@ -65,17 +75,16 @@ export default{
 </script>
 
 <style>
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'poppins', sans-serif;}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
 
 body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #030037;
-  color: white;
+  background-color: #0b0b3b;
+  color: #fff;
   padding-top: 80px;
 }
 
@@ -84,128 +93,164 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px;
-  background-color: #000143;
+  padding: 20px 40px;
+  background-color: #0a084d;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
-.logo {
-  font-size: 25px;
-  color: white;
+.logo a {
+  font-size: 28px;
+  font-weight: bold;
+  color: #53baff;
   text-decoration: none;
-  font-weight: 600;
-  animation: slideRight 1s ease forwards;
+  transition: color 0.3s;
+}
+
+.logo a:hover {
+  color: #79cdff;
 }
 
 .navbarra a {
-  font-size: 20px;
-  color: white;
-  text-decoration: none;
+  font-size: 18px;
   margin-left: 30px;
-  animation: slideLeft 1s ease forwards;
-  animation-delay: calc(0.2s * var(--i));
+  color: #ffffff;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.navbarra a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #53baff;
+  transition: 0.3s;
 }
 
 .navbarra a:hover {
-  color: #53bafff7;
+  color: #53baff;
+}
+
+.navbarra a:hover::after {
+  width: 100%;
 }
 
 .main-content {
-  background-color: #030037;
-  color: white;
   text-align: center;
-  margin-top: 120px;
-  padding: 20px;
-
+  padding: 60px 20px;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: calc(100vh - 120px);
-}
-
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 40px;
 }
 
 .sub-title {
+  font-size: 36px;
   margin: 10px 0;
-  font-size: 32px;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .form-pesquisa {
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap; /* responsividade */
-}
-
-.divAnuncios {
-  display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  gap: 12px;
   width: 100%;
-  max-width: 1200px;
 }
 
 .form-pesquisa input {
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 4px;
-  border: none;
-  width: 250px;
+  padding: 14px 20px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 400px;
+  max-width: 90%;
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
+
 .form-pesquisa button {
-  padding: 10px 15px;
+  padding: 12px 20px;
   font-size: 16px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: none;
   background-color: #53baff;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: 0.3s ease;
 }
 
 .form-pesquisa button:hover {
-  background-color: #409de0;
+  background-color: #3fa4e0;
+}
+
+.divAnuncios {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .cards {
-  background-color: white;
-  color: black;
-  border-radius: 10px;
+  background-color: #ffffff;
+  color: #000;
+  border-radius: 12px;
   padding: 20px;
-  width: 250px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  width: 260px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.3s;
+  cursor: pointer;
 }
 
-@keyframes slideRight {
-  0% {
-    transform: translateX(-100px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.cards:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.3);
 }
 
-@keyframes slideLeft {
-  0% {
-    transform: translateX(100px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.cards h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #0b0b3b;
 }
+
+.cards h5 {
+  font-size: 14px;
+  color: #333;
+}
+
+.cards button {
+  margin-top: 15px;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  background-color: #0b5ed7;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cards button:hover {
+  background-color: #084298;
+  transform: scale(1.05);
+}
+
+
 </style>
