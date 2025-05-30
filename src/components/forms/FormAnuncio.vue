@@ -265,20 +265,11 @@ button:hover {
 }
 
 #add tr:nth-child(even) {
-<<<<<<< HEAD
   background-color: #91a1ff;
 }
 
 #add tr:hover {
   background-color: #1212;
-=======
-  background-color: #f9f9f9;
-  color: black;
-}
-
-#add tr:hover {
-  background-color: #f1f1f1;
->>>>>>> 70ff39d3fc94a7558ea14280cd5ee623fcc05c1a
 }
 
 #add td button {

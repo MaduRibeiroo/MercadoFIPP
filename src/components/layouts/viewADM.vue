@@ -112,7 +112,6 @@ export default {
     components: {
         FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios, viewCatADM
     },
-<<<<<<< HEAD
     methods: {
         irParaBuscaAnuncio(){
             this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});
@@ -125,19 +124,6 @@ export default {
         }
     }
     
-=======
-    methods:{
-        irParaBuscaAnuncio(){
-        this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});
-    },
-    irCategoriaADM() {
-      this.$router.push('/view-categoria-adm');
-    },
-    excluirUsuario(){
-        this.$router.push('/form-usuario/usuario');
-    }
-    }
->>>>>>> 70ff39d3fc94a7558ea14280cd5ee623fcc05c1a
 }
 </script>
 
