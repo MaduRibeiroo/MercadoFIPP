@@ -1,7 +1,7 @@
 <template>
     <header class="header">
-            <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
-    
+            <a v-if="nivel == 2" href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
+            <a v-if="nivel == 1" href="#" class="logo"><router-link to="/view-adm">Mercado FIPP</router-link></a>
             <nav class="navbarra">
               <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
               <a v-if="nivel==1" style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
