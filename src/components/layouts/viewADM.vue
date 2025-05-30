@@ -25,7 +25,7 @@
 
         <section style="margin-top: 100px;" class="sobre" id="id-sobre">
             <div class="sobre-img">
-                <img src="/src/assets/lobo.png">
+                <img src="../../assets/lobo.png">
             </div>
             <div class="sobre-texto">
                 <h2>Sobre o <span>Mercado FIPP</span></h2>
