@@ -116,7 +116,7 @@ export default{
         },
         alterarAnuncio(){
           if(confirm("Deseja realmente alterar o anúncio: " + this.anuncios.titulo + "?")){
-            this.$router.push("/form-anuncio");
+            this.$router.push({name: "FormAnuncios" , params: { msg: "algumaMensagem" }, query: { nivel: this.nivel }});
           }
         }
     }
