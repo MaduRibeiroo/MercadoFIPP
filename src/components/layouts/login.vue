@@ -88,9 +88,9 @@ export default {
           localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
 
           if (usuario.nivel === 1) {
-            this.$router.push({name: "MenuAdm", params: {nivel: usuario.nivel}});
+            this.$router.push({name: "MenuAdm", query: { nivel: usuario.nivel } });
           } else if (usuario.nivel === 2 || usuario.nivel === 3) {
-            this.$router.push({name: "Menu" , params: {nivel: usuario.nivel}});
+            this.$router.push({name: "Menu" , query: { nivel: usuario.nivel } });
           } else {
             this.erro = 'Nível de acesso desconhecido.';
           }

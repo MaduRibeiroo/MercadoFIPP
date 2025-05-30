@@ -78,7 +78,7 @@ export default {
     FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios
   },
   created(){
-    this.nivel = this.$route.params.nivel;  
+    this.nivel = this.$route.query.nivel;  
   },
   methods: {
     irParaFormAnuncio() {
@@ -88,7 +88,7 @@ export default {
       this.$router.push('/view-cat');
     },
     irParaBuscaAnuncios(){
-        this.$router.push({name: "BuscarAnuncios" , params: {nivel: this.nivel}});
+        this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});
     }
   }
 }

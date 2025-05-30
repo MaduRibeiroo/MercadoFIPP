@@ -9,8 +9,8 @@
     </header>
     <div class="mainContent">
             <div class="top-buttons">
-                <button class="btn-box" @click="alterarAnuncio">Alterar Anuncio</button>
-                <button class="btn-box" @click="excluirAnuncio">Excluir Anuncio</button>
+                <button v-if="nivel == 2" class="btn-box" @click="alterarAnuncio">Alterar Anuncio</button>
+                <button v-if="nivel == 1" class="btn-box" @click="excluirAnuncio">Excluir Anuncio</button>
             </div>
             <div v-if="anuncios && anuncios.titulo" class="infos">
                     <h3>{{anuncios.titulo}}</h3>
@@ -55,11 +55,12 @@ export default{
         msg: String
     },
     data(){
-        return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[],respostas: [], respostaVisivel:[], mensagem:"", formOn:false,
+        return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[],respostas: [], respostaVisivel:[], mensagem:"", nivel:0, formOn:false,
         anuncios: null}
     },
     created() {
         this.id = this.$route.params.id;  
+        this.nivel = this.$route.query.nivel;
         this.carregarDados();
     },
     methods:{
