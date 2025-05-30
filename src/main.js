@@ -11,6 +11,7 @@ import login from './components/layouts/login.vue'
 import ViewCat from './components/layouts/viewCat.vue'
 import buscarAnuncios from './components/layouts/buscarAnuncios.vue'
 import AnuncioIndividual from './components/layouts/AnuncioIndividual.vue'
+import viewCatADM from './components/layouts/viewCatADM.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -18,6 +19,7 @@ const router = createRouter({
     { path: '/', component: login, props: true},
     { path: '/Menu', name: 'Menu', component: MainView, props: true},
     { path: '/view-adm', name: 'MenuAdm', component: ViewADM, props: true},
+    { path: '/view-categoria-adm', component: viewCatADM, props: true},
     { path: '/view-categoria', component: ViewCat, props: true},
     { path: '/form-categorias/:msg', component: FormCategoria, props: true },
     { path: '/form-usuario/:msg', component: FormUsuario, props: true  },

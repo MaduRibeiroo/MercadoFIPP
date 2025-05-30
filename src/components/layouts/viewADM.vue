@@ -5,20 +5,15 @@
             <a href="#" class="logo">Mercado FIPP</a>
 
             <nav class="navbarra">
-                <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
                 <a style="--i:2">ADMIN</a>
-                <!--<a href="#id-home" style="--i:1" class="active">Home</a>
-                <a href="#id-sobre" style="--i:2">Sobre</a>
-                <a href="#id-relatorio" style="--i:3">Relatório</a>
-                <a href="#id-contato" style="--i:4">Contato</a>-->
             </nav>
         </header>
         <section class="home" id="id-home">
             <div class="home-conteudo">
                 <h3>Bem vindo ao</h3>
-                <h1>Mercado FIPP</h1>
+                <h1>Painel Administrativo do Mercado FIPP</h1>
                 <h3>Somos uma empresa especializadas em <span style="color: #53bafff7;">Vendas</span></h3>
-                <p>O Mercado FIPP é a plataforma ideal para comprar, vender e interagir de forma prática e segura.</p>
+                <p>Esse painel é acessível apenas por administradores autorizados, garantindo que todas as ações realizadas sejam seguras e registradas conforme as boas práticas de governança digital.</p>
             </div>
             <span class="home-imgHover"></span>
         </section>
@@ -28,21 +23,17 @@
                 <img src="../../assets/lobo.png">
             </div>
             <div class="sobre-texto">
-                <h2>Sobre o <span>Mercado FIPP</span></h2>
-                <p>Aqui, você pode criar seu perfil, publicar anúncios em diversas categorias, adicionar fotos dos seus
-                    produtos e tirar dúvidas diretamente com os vendedores por meio de perguntas e respostas nos
-                    anúncios. Nosso objetivo é facilitar a negociação entre os usuários, promovendo um ambiente
-                    colaborativo e eficiente. Explore as categorias, publique seu anúncio e aproveite tudo que o Mercado
-                    FIPP tem a oferecer!</p>
-                <p style="margin-top: -30px;">Deseja se cadastrar um usuário?</p>
-                <a class="btn-box"><router-link to="/form-usuario/Usuário">Usuário</router-link></a>
+                <h2>Sobre o <span>Painel Administrativo</span></h2>
+                <p>Bem-vindo ao Painel Administrativo do nosso sistema. Esta interface foi desenvolvida para oferecer total controle e gestão sobre os principais elementos da plataforma, garantindo segurança, organização e eficiência no gerenciamento de dados.</p>
+                <p style="margin-top: -30px;">Deseja verificar quais as categorias existentes?</p>
+                <a class="btn-box">CATEGORIAS</a>
             </div>
         </section>
 
         <section>
             <div class="relatorio" id="id-relatorio">
                 <div class="container">
-                    <h1 class="sub-title"><span>Exclusão</span></h1>
+                    <h1 class="sub-title" style="margin-top: -100px;"><span>Exclusão</span></h1>
                     <div class="relatorio-lista">
                         <div>
                             <h2>Excluir categoria</h2>
@@ -50,12 +41,8 @@
                             <br>
                             ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                             Clique no botão abaixo para prosseguir com a exclusão da categoria.</p>
-<<<<<<< HEAD
-                            <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">CRIAR</button>
-=======
                             <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">EXCLUIR CATEGORIA</button>
                            
->>>>>>> f1dfa4fdbcc18778acffd3d827f2086efbd21861
                         </div>
                         <div>
                             <h2>Excluir usuário</h2>
@@ -71,11 +58,7 @@
                             <br>
                             ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                             Clique no botão abaixo para excluir o anúncio.</p>
-<<<<<<< HEAD
                             <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR ANUNCIO</button>
-=======
-                            <button class="btn-box" style="margin-top: 10px;" @click="irParaBuscaAnuncio">EXCLUIR ANUNCIO</button>
->>>>>>> f1dfa4fdbcc18778acffd3d827f2086efbd21861
                         </div>
                     </div>
                 </div>

@@ -140,7 +140,7 @@ input[type=submit]:hover {
 
 div {
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: #91a1ff;
   padding: 20px;
 }
 
