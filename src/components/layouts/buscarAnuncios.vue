@@ -1,9 +1,8 @@
 <template>
         <header class="header">
-            <a v-if="nivel == 2" href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
-            <a v-if="nivel == 1" href="#" class="logo"><router-link to="/view-adm">Mercado FIPP</router-link></a>
+            <a v-if="nivel == 2" href="#" class="logo" @click="irParaMenu">Mercado FIPP</a>
+            <a v-if="nivel == 1" href="#" class="logo"@click="irParaMenuAdm">Mercado FIPP</a>
             <nav class="navbarra">
-              <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
               <a v-if="nivel==1" style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
               <a v-if="nivel==2" style="--i:2"><router-link to="/form-usuario/Usuário">Usuario</router-link></a>
             </nav>
@@ -82,6 +81,12 @@ export default{
                 alert(error)
             })
           }
+        },
+        irParaMenu(){
+          this.$router.push({name: "Menu" , query: { nivel: this.nivel }});
+        },
+        irParaMenuAdm(){
+          this.$router.push({name: "MenuAdm" , query: { nivel: this.nivel }});
         }
     }
 }
