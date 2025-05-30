@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     irParaFormAnuncio() {
-      this.$router.push('/form-anuncio/anuncio');
+      this.$router.push({name: "FormAnuncios" , params: { msg: "algumaMensagem" }, query: { nivel: this.nivel }});
     },
     irParaCategoria() {
       this.$router.push('/view-cat');

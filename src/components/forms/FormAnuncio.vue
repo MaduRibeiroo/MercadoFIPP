@@ -1,22 +1,31 @@
 <template>
+  <header class="header">
+            <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
+    
+            <nav class="navbarra">
+              <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
+              <a v-if="nivel==1" style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
+              <a v-if="nivel==2" style="--i:2"><router-link to="/form-usuario/Usuário">Usuario</router-link></a>
+            </nav>
+    </header>
   <h1 class="sub-title" style="margin-top: 100px;"><span>Anuncio</span></h1>
   <div class="hello" style="width: 50%; margin-left: auto; margin-right: auto; margin-bottom: 200px;">
     <div v-if="formOn">
-      <form @submit.prevent="this.gravar()">
+      <form @submit.prevent="submitForm">
         <label for="idanun">Id</label>
         <input type="text" id="idanun" v-model="id" placeholder="ID do Anuncio..">
         <label for="title">Titulo</label>
         <input type="text" id="title" v-model="titulo" placeholder="Titulo do anuncio..">
         <label for="date">Data</label>
-        <input type="text" id="date" v-model="data" placeholder="Data..">
+        <input type="date" id="date" v-model="data" placeholder="Data..">
         <label for="desc">Descrição</label>
         <input type="text" id="desc" v-model="descricao" placeholder="Descrição..">
         <label for="price">Preço</label>
         <input type="text" id="price" v-model="preco" placeholder="Preço..">
         <label for="idcat">Id categoria</label>
-        <input type="text" id="idcat" v-model="idcat" placeholder="Id da categoria..">
+        <input type="text" id="idcat" v-model="catid" placeholder="Id da categoria..">
         <label for="idusu">Id do usuario</label>
-        <input type="text" id="idusu" v-model="idusu" placeholder="Id do usuario..">
+        <input type="text" id="idusu" v-model="usrid" placeholder="Id do usuario..">
         <input type="submit" value="Confirmar">
       </form>
     </div>
@@ -44,16 +53,11 @@
           <td>{{ anu.catid }}</td>
           <td>{{ anu.catusu }}</td>
           <td><button @click="this.alterar(anu.id)">Alterar</button></td>
-          <td><button @click="this.apagar(anu.id)">Apagar</button></td>
+          <td v-if="nivel == 1"><button @click="this.apagar(anu.id)">Apagar</button></td>
         </tr>
       </tbody>
     </table>
   </div>
-
-
-
-
-
 </template>
 
 <script>
@@ -66,56 +70,109 @@ export default {
   },
   data() {
     return {
-      id: 0, titulo: "", data: "", descricao: "", preco: "", catid: "", catusu: "", formOn: false,
+      id: 0, titulo: "", data: "", descricao: "", preco: "", catid: "", catusu: "", nivel:0, modoAlterar: false, formOn: false,
       anuncios: []
     }
   },
-  methods: {
-    mostrarForm(flag) {
-      this.formOn = flag;
-    },
-    gravar() {
-      const url = 'http://localhost:8080/apis/anuncio/';
-      const data = { id: this.id, titulo: this.titulo, data: this.data, descricao: this.descricao, preco: this.preco, catid: this.catid, catusu: this.catusu };
-      axios.post(url, data)
-        .then(response => {
-          this.carregarDados();
-        })
-        .catch(error => {
-          alert('Erro:', error);
-        });
-      this.mostrarForm(false);
-    },
-    apagar(id) {
-      axios.delete("http://localhost:8080/apis/anuncio/" + id)
-        .then(result => { this.carregarDados() })
-        .catch(error => { alert(error) })
-    },
-    alterar(id) {
-      this.formOn = true;
-      axios.get("http://localhost:8080/apis/anuncio/" + id)
-        .then(result => {
-          const anuncio = result.data;
-          this.id = anuncio.id;
-          this.titulo = anuncio.titulo;
-          this.data = anuncio.data;
-          this.descricao = anuncio.descricao;
-          this.preco = anuncio.preco;
-          this.catid = anuncio.catid;
-          this.catusu = anuncio.catusu;
-        })
-        .catch(error => { alert(error) })
-
-    },
-    carregarDados() {
-      axios.get("http://localhost:8080/apis/anuncio")
-        .then(result => { this.anuncios = result.data })
-        .catch(error => { alert(error) })
-    },
-    ordenarTitulo() {
-      this.anuncios.sort((a, b) => a.titulo.localeCompare(b.titulo));
+  created(){
+    this.nivel = this.$route.query.nivel;
+  },
+ methods: {
+  mostrarForm(flag) {
+    this.formOn = flag;
+  },
+  submitForm() {
+    if (this.modoAlterar) {
+      this.alterarAnuncio();
+    } else {
+      this.gravar();
     }
   },
+  gravar() {
+    const url = 'http://localhost:8080/apis/anuncio';
+    const data = {
+      // id pode ser 0 ou null para novo registro
+      id: this.id || null,
+      titulo: this.titulo,
+      data: this.data ? new Date(this.data).toISOString().substring(0, 10) : null,
+      descricao: this.descricao,
+      preco: this.preco,
+      catid: this.catid,
+      usrid: this.usrid
+    };
+    axios.post(url, data)
+      .then(response => {
+        this.carregarDados();
+      })
+      .catch(error => {
+        console.error('Erro ao gravar anúncio:', error.response || error);
+        alert('Erro ao gravar anúncio');
+      });
+    this.mostrarForm(false);
+  },
+  apagar(id) {
+    axios.delete("http://localhost:8080/apis/anuncio/" + id)
+      .then(() => this.carregarDados())
+      .catch(error => alert('Erro ao apagar: ' + error));
+  },
+  alterar(id) {
+    this.formOn = true;
+    axios.get("http://localhost:8080/apis/anuncio/" + id)
+      .then(result => {
+        const anuncio = result.data;
+        this.id = anuncio.id;
+        this.titulo = anuncio.titulo;
+        this.data = anuncio.data ? anuncio.data.substring(0,10) : ""; // para input type=date
+        this.descricao = anuncio.descricao;
+        this.preco = anuncio.preco;
+        this.catid = anuncio.catid;
+        this.usrid = anuncio.usrid;
+        this.modoAlterar = true;
+        this.mostrarForm(true);
+      })
+      .catch(error => alert('Erro ao carregar anuncio: ' + error));
+  },
+  alterarAnuncio() {
+    const url = `http://localhost:8080/apis/anuncio`;
+    const data = {
+      id: this.id,  // importante enviar o id para update
+      titulo: this.titulo,
+      data: this.data ? new Date(this.data).toISOString().substring(0, 10) : null,
+      descricao: this.descricao,
+      preco: this.preco,
+      catid: this.catid,
+      usrid: this.usrid
+    };
+    axios.put(url, data)
+      .then(() => {
+        this.carregarDados();
+        this.limparForm();
+        this.mostrarForm(false);
+        this.modoAlterar = false;
+      })
+      .catch(error => {
+        alert("Erro ao alterar anúncio: " + error);
+      });
+  },
+  limparForm() {
+    this.id = 0;
+    this.titulo = "";
+    this.data = "";
+    this.descricao = "";
+    this.preco = "";
+    this.catid = "";
+    this.usrid = "";
+    this.modoAlterar = false;
+  },
+  carregarDados() {
+    axios.get("http://localhost:8080/apis/anuncio")
+      .then(result => { this.anuncios = result.data; })
+      .catch(error => alert('Erro ao carregar anúncios: ' + error));
+  },
+  ordenarTitulo() {
+    this.anuncios.sort((a, b) => a.titulo.localeCompare(b.titulo));
+  }
+},
   mounted(){
       this.carregarDados();
     }

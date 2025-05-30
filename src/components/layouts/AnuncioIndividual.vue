@@ -4,7 +4,8 @@
     
             <nav class="navbarra">
               <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
-              <a style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
+              <a v-if="nivel==1" style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
+              <a v-if="nivel==2" style="--i:2"><router-link to="/form-usuario/Usuário">Usuario</router-link></a>
             </nav>
     </header>
     <div class="mainContent">
@@ -111,6 +112,11 @@ export default{
             }).catch(error=>{
                 alert(error)
             })
+          }
+        },
+        alterarAnuncio(){
+          if(confirm("Deseja realmente alterar o anúncio: " + this.anuncios.titulo + "?")){
+            this.$router.push("/form-anuncio");
           }
         }
     }

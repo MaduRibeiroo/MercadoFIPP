@@ -22,8 +22,8 @@ const router = createRouter({
     { path: '/view-categoria-adm', component: viewCatADM, props: true},
     { path: '/view-categoria', component: ViewCat, props: true},
     { path: '/form-categorias/:msg', component: FormCategoria, props: true },
-    { path: '/form-usuario/:msg', component: FormUsuario, props: true  },
-    { path: '/form-anuncio/:msg', component: FormAnuncio, props: true },
+    { path: '/form-usuario/:msg',  component: FormUsuario, props: true  },
+    { path: '/form-anuncio/:msg', name: 'FormAnuncios', component: FormAnuncio, props: true },
     { path: '/buscarAnuncios', name: 'BuscarAnuncios', component: buscarAnuncios, props: true},
     { path: '/anuncioIndividual/:id', name: 'AnuncioIndividual', component: AnuncioIndividual, props: true}
     ]
