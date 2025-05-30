@@ -1,17 +1,18 @@
 <template>
         <header class="header">
-            <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
-    
+            <a v-if="nivel == 2" href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
+            <a v-if="nivel == 1" href="#" class="logo"><router-link to="/view-adm">Mercado FIPP</router-link></a>
             <nav class="navbarra">
               <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
-              <a style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
+              <a v-if="nivel==1" style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
+              <a v-if="nivel==2" style="--i:2"><router-link to="/form-usuario/Usuário">Usuario</router-link></a>
             </nav>
         </header>
     
         <main class="main-content">
             <div class="formContent">
-                <h3 class="sub-title">ANÚNCIOS</h3>
-                <p class="sub-title">Busque o anúncio pelo nome</p>
+                <h3 class="titulo-principal">ANÚNCIOS</h3>
+                <p class="titulo-instrucao">Busque o anúncio pelo nome</p>
                 <form class="form-pesquisa" @submit.prevent="buscarTitulo">
                     <input type="text" id="buscar" placeholder="Digite o título..." v-model="titulo">
                     <button id="botaoPesquisar" type="submit">Pesquisar</button>
@@ -98,6 +99,8 @@ body {
   background-color: #0b0b3b;
   color: #fff;
   padding-top: 80px;
+  font-size: 14px;
+
 }
 
 .header {
@@ -112,6 +115,17 @@ body {
   align-items: center;
   z-index: 100;
   box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.titulo-principal {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.texto-instrucao {
+  font-size: 18px;
+  margin-bottom: 20px;
 }
 
 .logo a {
@@ -165,7 +179,7 @@ body {
 
 .sub-title {
   margin: 10px 0;
-  font-size: 10px; 
+  font-size: 18px; /* antes estava 10px, isso parece muito pequeno; ajuste conforme necessário */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 

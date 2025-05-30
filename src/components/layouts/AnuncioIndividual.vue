@@ -1,7 +1,7 @@
 <template>
     <header class="header">
-            <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
-    
+            <a v-if="nivel == 2" href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
+            <a v-if="nivel == 1" href="#" class="logo"><router-link to="/view-adm">Mercado FIPP</router-link></a>
             <nav class="navbarra">
               <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
               <a v-if="nivel==1" style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
@@ -10,7 +10,7 @@
     </header>
     <div class="mainContent">
             <div class="top-buttons">
-                <button v-if="nivel == 2" class="btn-box" @click="alterarAnuncio">Alterar Anuncio</button>
+                <button v-if="nivel == 2 || nivel==1" class="btn-box" @click="alterarAnuncio">Alterar Anuncio</button>
                 <button v-if="nivel == 1" class="btn-box" @click="excluirAnuncio">Excluir Anuncio</button>
             </div>
             <div v-if="anuncios && anuncios.titulo" class="infos">

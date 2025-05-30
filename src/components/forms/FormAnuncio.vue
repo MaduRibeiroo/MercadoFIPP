@@ -46,7 +46,7 @@
           <th>Preço</th>
           <th>Cat id</th>
           <th>Usu id</th>
-          <th>Foto</th>
+          
           <th colspan="2">Ações</th>
         </tr>
       </thead>
@@ -184,63 +184,129 @@ export default {
 </script>
 
 <style scoped>
-input[type=text],
+/* Estilização geral */
+.hello {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto 200px auto;
+  background-color: #f5f7ff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input[type="text"],
+input[type="date"],
 select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
+  padding: 10px 15px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  border-radius: 6px;
+  font-size: 16px;
 }
 
-input[type=submit] {
-  width: 100%;
-  background-color: #225c24;
+input[type="submit"] {
+  background-color: #4CAF50;
   color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
+  padding: 12px;
+  font-size: 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-input[type=submit]:hover {
+input[type="submit"]:hover {
   background-color: #45a049;
 }
 
-div {
-  border-radius: 5px;
-  background-color: #91a1ff;
-  padding: 20px;
+/* Botão novo anúncio */
+button {
+  margin-top: 20px;
+  background-color: #5e72e4;
+  color: white;
+  padding: 10px 20px;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
+button:hover {
+  background-color: #4051b5;
+}
+
+/* Tabela */
 #add {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
   width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  font-size: 15px;
 }
 
-#add td,
-#add th {
+#add th,
+#add td {
+  text-align: left;
+  padding: 12px;
   border: 1px solid #ddd;
-  padding: 8px;
+  color: black;
+}
+
+#add th {
+  background-color: #4CAF50;
+  color: black;
 }
 
 #add tr:nth-child(even) {
+<<<<<<< HEAD
   background-color: #91a1ff;
 }
 
 #add tr:hover {
   background-color: #1212;
+=======
+  background-color: #f9f9f9;
+  color: black;
 }
 
-#add th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: blueviolet;
-  color: white;
+#add tr:hover {
+  background-color: #f1f1f1;
+>>>>>>> 70ff39d3fc94a7558ea14280cd5ee623fcc05c1a
 }
+
+#add td button {
+  background-color: #e74c3c;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#add td button:hover {
+  background-color: #c0392b;
+}
+
+/* Título */
+.sub-title {
+  text-align: center;
+  font-size: 36px;
+  margin-top: 120px;
+  margin-bottom: 40px;
+  font-weight: bold;
+  color: #333;
+}
+
+.sub-title span {
+  color: #4051b5;
+}
+
 </style>

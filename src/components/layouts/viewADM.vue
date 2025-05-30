@@ -68,7 +68,7 @@
                                 ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                                 Clique no botão abaixo para excluir o anúncio.
                             </p>
-                            <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR ANUNCIO</button>
+                            <button class="btn-box" style="margin-top: 10px;" @click="irParaBuscaAnuncio">EXCLUIR ANUNCIO</button>
                         </div>
                     </div>
                 </div>
@@ -112,6 +112,7 @@ export default {
     components: {
         FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios, viewCatADM
     },
+<<<<<<< HEAD
     methods: {
         irParaBuscaAnuncio(){
             this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});
@@ -124,6 +125,19 @@ export default {
         }
     }
     
+=======
+    methods:{
+        irParaBuscaAnuncio(){
+        this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});
+    },
+    irCategoriaADM() {
+      this.$router.push('/view-categoria-adm');
+    },
+    excluirUsuario(){
+        this.$router.push('/form-usuario/usuario');
+    }
+    }
+>>>>>>> 70ff39d3fc94a7558ea14280cd5ee623fcc05c1a
 }
 </script>
 
