@@ -176,6 +176,7 @@ body{
     display: flex;
     align-items: center;
     padding: 70px 10% 0;
+    margin-top: -100px;
 }
 
 .home-conteudo{
