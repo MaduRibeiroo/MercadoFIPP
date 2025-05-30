@@ -19,11 +19,12 @@
                 </form>
             </div>
             <div class="divAnuncios">
-                <div v-for="anu in this.anuncios" :key="anu.id" class="cards" @click="irParaAnuncioIndividual(anu)">
+                <div v-for="anu in this.anuncios" :key="anu.id" class="cards" >
                     <h3>{{ anu.titulo}}</h3>
                     <h5>{{ anu.descricao}}</h5>
                     <h4>R$ {{ anu.preco }}</h4>
-                    <button class="">Acessar produto</button>
+                    <button class="" @click="irParaAnuncioIndividual(anu)">Acessar produto</button>
+                    <button v-if="nivel == 1" class="" @click.stop="excluirAnuncio(anu)">Excluir anuncio</button>
                 </div>
             </div>
         </main>
@@ -39,10 +40,11 @@ export default{
         msg: String
     },
     data(){
-      return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[], mensagem:"", formOn:false,
+      return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[], mensagem:"", nivel:0, formOn:false,
       anuncios:[]}
     },
     created() {
+        this.nivel = this.$route.params.nivel; 
         this.carregarDados();
     },
     methods:{
@@ -69,6 +71,16 @@ export default{
         },
         irParaAnuncioIndividual(anuncio) {
             this.$router.push({name: "AnuncioIndividual" , params: {id: anuncio.id}});
+        },
+        excluirAnuncio(anuncio){
+            if(confirm("Deseja realmente excluir o anúncio: " + this.anuncio.titulo + "?")){
+            axios.delete("http://localhost:8080/apis/anuncio/"+this.anuncio.id).then(result=>{
+              this.mensagem="Anuncio excluido com sucesso";
+              this.$router.push({name: "BuscarAnuncios" , params: {nivel: this.nivel}});
+            }).catch(error=>{
+                alert(error)
+            })
+          }
         }
     }
 }

@@ -16,13 +16,13 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
     { path: '/', component: login, props: true},
-    { path: '/Menu', component: MainView, props: true},
-    { path: '/view-adm', component: ViewADM, props: true},
+    { path: '/Menu', name: 'Menu', component: MainView, props: true},
+    { path: '/view-adm', name: 'MenuAdm', component: ViewADM, props: true},
     { path: '/view-categoria', component: ViewCat, props: true},
     { path: '/form-categorias/:msg', component: FormCategoria, props: true },
     { path: '/form-usuario/:msg', component: FormUsuario, props: true  },
     { path: '/form-anuncio/:msg', component: FormAnuncio, props: true },
-    { path: '/buscarAnuncios', component: buscarAnuncios, props: true},
+    { path: '/buscarAnuncios', name: 'BuscarAnuncios', component: buscarAnuncios, props: true},
     { path: '/anuncioIndividual/:id', name: 'AnuncioIndividual', component: AnuncioIndividual, props: true}
     ]
 });

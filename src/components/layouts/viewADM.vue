@@ -89,8 +89,14 @@ import FormUsuario from '../forms/FormUsuario.vue';
 import buscarAnuncios from './buscarAnuncios.vue';
 
 export default {
-  name: 'App',
-  components: {
+  name: 'MenuAdm',
+  data(){
+      return {nivel:0}
+    },
+    created() {
+        this.nivel = this.$route.params.nivel;  
+    },
+    components: {
     FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios
   },
   methods: {
@@ -98,7 +104,7 @@ export default {
       this.$router.push('/form-anuncio/anuncio');
     },
     irParaBuscaAnuncio(){
-        this.$router.push('/buscarAnuncios');
+        this.$router.push({name: "BuscarAnuncios" , params: {nivel: this.nivel}});
     }
   }
 }
