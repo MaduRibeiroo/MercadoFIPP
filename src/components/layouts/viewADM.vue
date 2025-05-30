@@ -53,22 +53,11 @@
                         </div>
                         <div>
                             <h2>Excluir usuário</h2>
-<<<<<<< HEAD
                             <p>Se você precisa remover um usuário da plataforma, utilize o botão abaixo. Esta funcionalidade é indicada para casos de violação das regras de uso, contas inativas por longos períodos ou a pedido do próprio usuário.
                             <br>
                             ⚠️ Atenção: Esta ação é irreversível.
                             Clique no botão abaixo para confirmar a exclusão do usuário.</p>
                             <button class="btn-box" style="margin-top: 10px;" @click="excluirUsuario">EXCLUIR USUÁRIO</button>
-=======
-                            <p>Se você precisa remover um usuário da plataforma, utilize o botão abaixo. Esta
-                                funcionalidade é indicada para casos de violação das regras de uso, contas inativas por
-                                longos períodos ou a pedido do próprio usuário.
-                                <br>
-                                ⚠️ Atenção: Esta ação é irreversível.
-                                Clique no botão abaixo para confirmar a exclusão do usuário.
-                            </p>
-                            <button class="btn-box" style="margin-top: 10px;">EXCLUIR USUÁRIO</button>
->>>>>>> 7114f3aa227dd26dca90e4702274ef8f48b15488
                         </div>
                         <div>
                             <h2>Excluir anuncio</h2>
@@ -122,7 +111,6 @@ export default {
     components: {
         FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios
     },
-<<<<<<< HEAD
     irParaBuscaAnuncio(){
         this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});
     },
@@ -131,15 +119,6 @@ export default {
     },
     excluirUsuario(){
         this.$router.push('/form-usuario/usuario');
-=======
-    methods: {
-        irParaFormAnuncio() {
-            this.$router.push('/form-anuncio/anuncio');
-        },
-        irParaBuscaAnuncio() {
-            this.$router.push({ name: "BuscarAnuncios", query: { nivel: this.nivel } });
-        }
->>>>>>> 7114f3aa227dd26dca90e4702274ef8f48b15488
     }
 }
 </script>
