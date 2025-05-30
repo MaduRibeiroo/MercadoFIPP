@@ -10,7 +10,7 @@
     
         <main class="main-content">
             <div class="formContent">
-                <h1 class="sub-title">ANÚNCIOS</h1>
+                <h3 class="sub-title">ANÚNCIOS</h3>
                 <p class="sub-title">Busque o anúncio pelo nome</p>
                 <form class="form-pesquisa" @submit.prevent="buscarTitulo">
                     <input type="text" id="buscar" placeholder="Digite o título..." v-model="titulo">
@@ -68,7 +68,7 @@ export default{
             })
         },
         irParaAnuncioIndividual(anuncio) {
-            this.$router.push({name: "anuncioIndividual" , params: {id: anuncio.id}});
+            this.$router.push({name: "AnuncioIndividual" , params: {id: anuncio.id}});
         }
     }
 }
@@ -152,9 +152,8 @@ body {
 }
 
 .sub-title {
-  font-size: 36px;
   margin: 10px 0;
-  font-weight: 600;
+  font-size: 10px; 
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 

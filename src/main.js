@@ -23,7 +23,7 @@ const router = createRouter({
     { path: '/form-usuario/:msg', component: FormUsuario, props: true  },
     { path: '/form-anuncio/:msg', component: FormAnuncio, props: true },
     { path: '/buscarAnuncios', component: buscarAnuncios, props: true},
-    { path: '/anuncioIndividual/:id', name: 'anuncioIndividual', props: true}
+    { path: '/anuncioIndividual/:id', name: 'AnuncioIndividual', component: AnuncioIndividual, props: true}
     ]
 });
     

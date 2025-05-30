@@ -8,9 +8,11 @@
             </nav>
     </header>
     <div class="mainContent">
-            <div v-if="anuncio" class="infos">
+            <button>Alterar Anuncio</button>
+            <button>Excluir Anuncio</button>
+            <div v-if="anuncios && anuncios.titulo" class="infos">
                     <h3>{{anuncios.titulo}}</h3>
-                    <p>Categoria: {{ anuncios.catid}}</p>
+                    <p>R$ {{ anuncios.preco }},00</p>
                     <h6>Descrição do produto</h6>
                     <p>{{ anuncios.descricao}}</p>
             </div>
@@ -129,6 +131,7 @@ export default{
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 45%;
+  color: black;
 }
 
 /* Quadro de interação */
@@ -138,6 +141,7 @@ export default{
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 45%;
+  color: black;
 }
 
 .form-pesquisa {
