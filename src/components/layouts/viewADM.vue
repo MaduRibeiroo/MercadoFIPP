@@ -23,7 +23,7 @@
             <span class="home-imgHover"></span>
         </section>
 
-        <section style="margin-top: 100px;" class="sobre" id="id-sobre">
+        <section style="margin-top: -150px;" class="sobre" id="id-sobre">
             <div class="sobre-img">
                 <img src="../../assets/lobo.png">
             </div>
@@ -42,7 +42,7 @@
         <section>
             <div class="relatorio" id="id-relatorio">
                 <div class="container">
-                    <h1 class="sub-title"><span>Anuncios e Perguntas</span></h1>
+                    <h1 class="sub-title"><span>Exclusão</span></h1>
                     <div class="relatorio-lista">
                         <div>
                             <h2>Excluir categoria</h2>
@@ -50,8 +50,12 @@
                             <br>
                             ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                             Clique no botão abaixo para prosseguir com a exclusão da categoria.</p>
+<<<<<<< HEAD
+                            <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">CRIAR</button>
+=======
                             <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">EXCLUIR CATEGORIA</button>
                            
+>>>>>>> f1dfa4fdbcc18778acffd3d827f2086efbd21861
                         </div>
                         <div>
                             <h2>Excluir usuário</h2>
@@ -67,7 +71,11 @@
                             <br>
                             ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                             Clique no botão abaixo para excluir o anúncio.</p>
+<<<<<<< HEAD
+                            <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR ANUNCIO</button>
+=======
                             <button class="btn-box" style="margin-top: 10px;" @click="irParaBuscaAnuncio">EXCLUIR ANUNCIO</button>
+>>>>>>> f1dfa4fdbcc18778acffd3d827f2086efbd21861
                         </div>
                     </div>
                 </div>
