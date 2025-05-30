@@ -26,7 +26,7 @@
                 <h2>Sobre o <span>Painel Administrativo</span></h2>
                 <p>Bem-vindo ao Painel Administrativo do nosso sistema. Esta interface foi desenvolvida para oferecer total controle e gestão sobre os principais elementos da plataforma, garantindo segurança, organização e eficiência no gerenciamento de dados.</p>
                 <p style="margin-top: -30px;">Deseja verificar quais as categorias existentes?</p>
-                <a class="btn-box">CATEGORIAS</a>
+                <a class="btn-box" @click="irCategoriaADM">CATEGORIAS</a>
             </div>
         </section>
 
@@ -50,7 +50,7 @@
                             <br>
                             ⚠️ Atenção: Esta ação é irreversível.
                             Clique no botão abaixo para confirmar a exclusão do usuário.</p>
-                            <button class="btn-box" style="margin-top: 10px;">EXCLUIR USUÁRIO</button>
+                            <button class="btn-box" style="margin-top: 10px;" @click="excluirUsuario">EXCLUIR USUÁRIO</button>
                         </div>
                         <div>
                             <h2>Excluir anuncio</h2>
@@ -96,6 +96,12 @@ export default {
     },
     irParaBuscaAnuncio(){
         this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});
+    },
+    irCategoriaADM() {
+      this.$router.push('/view-categoria-adm');
+    },
+    excluirUsuario(){
+        this.$router.push('/form-usuario/usuario');
     }
   }
 }

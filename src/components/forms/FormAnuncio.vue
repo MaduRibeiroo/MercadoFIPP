@@ -1,6 +1,6 @@
 <template>
   <h1 class="sub-title" style="margin-top: 100px;"><span>Anuncio</span></h1>
-  <div class="hello" style="width: 50%; margin-left: auto; margin-right: auto; margin-bottom: 200px;">
+  <div class="hello" style="width: 60%; margin-left: auto; margin-right: auto; margin-bottom: 200px;">
     <div v-if="formOn">
       <form @submit.prevent="this.gravar()">
         <label for="idanun">Id</label>
@@ -187,7 +187,7 @@ div {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #000143;
+  background-color: blueviolet;
   color: white;
 }
 
