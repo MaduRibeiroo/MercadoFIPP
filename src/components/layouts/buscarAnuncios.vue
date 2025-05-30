@@ -73,8 +73,8 @@ export default{
             this.$router.push({name: "AnuncioIndividual" , params: {id: anuncio.id}, query: { nivel: this.nivel }});
         },
         excluirAnuncio(anuncio){
-            if(confirm("Deseja realmente excluir o anúncio: " + this.anuncio.titulo + "?")){
-            axios.delete("http://localhost:8080/apis/anuncio/"+this.anuncio.id).then(result=>{
+            if(confirm("Deseja realmente excluir o anúncio: " + anuncio.titulo + "?")){
+            axios.delete("http://localhost:8080/apis/anuncio/"+anuncio.id).then(result=>{
               this.mensagem="Anuncio excluido com sucesso";
               this.$router.push({name: "BuscarAnuncios" , params: {nivel: this.nivel}});
             }).catch(error=>{
