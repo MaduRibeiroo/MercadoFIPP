@@ -29,8 +29,6 @@
             />
           </div>
           <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-            
-<<<<<<< HEAD
               <form @submit.prevent="login">
                 <div class="wrapper">
                   <div class="card-switch">
@@ -90,9 +88,9 @@ export default {
           localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
 
           if (usuario.nivel === 1) {
-            this.$router.push('/view-adm/');
+            this.$router.push({name: "MenuAdm", params: {nivel: usuario.nivel}});
           } else if (usuario.nivel === 2 || usuario.nivel === 3) {
-            this.$router.push('/Menu/');
+            this.$router.push({name: "Menu" , params: {nivel: usuario.nivel}});
           } else {
             this.erro = 'Nível de acesso desconhecido.';
           }

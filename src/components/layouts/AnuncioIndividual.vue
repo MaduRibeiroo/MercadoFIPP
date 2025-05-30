@@ -1,121 +1,118 @@
 <template>
-  <header class="header">
-    <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
-
-    <nav class="navbarra">
-      <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
-      <a style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
-    </nav>
-  </header>
-  <div class="mainContent">
-    <div class="top-buttons">
-      <button class="btn-box">Alterar Anuncio</button>
-      <button class="btn-box">Excluir Anuncio</button>
-    </div>
-    <div v-if="anuncios && anuncios.titulo" class="infos">
-      <h3>{{ anuncios.titulo }}</h3>
-      <p>R$ {{ anuncios.preco }},00</p>
-      <h6>Descrição do produto</h6>
-      <p>{{ anuncios.descricao }}</p>
-    </div>
-    <div class="interacao">
-      <form class="form-pesquisa" @submit.prevent="adicionarPergunta">
-        <p>Envie a sua pergunta aqui</p>
-        <input type="text" id="buscar" placeholder="Digite sua pergunta..." v-model="texto">
-        <button id="botaoPesquisar" type="submit">Enviar pergunta</button>
-      </form>
-      <div class="perguntasRespostas" v-if="anuncios?.perguntas?.length">
-        <div v-for="(per, index) in this.anuncios.perguntas" :key="index" class="pergunta">
-          <h3>{{ per.texto }}</h3>
-          <p v-if="!per.resposta" @click="mostrarInput(index)" style="cursor: pointer; color: blue;">Responder</p>
-          <div v-if="respostaVisivel[index] && !per.resposta">
-            <input type="text" v-model="respostas[index]" placeholder="Digite a resposta..." />
-            <button @click="adicionarResposta(index)">Enviar</button>
-          </div>
-          <div v-if="per.resposta" class="resposta-bloco">
-            <p class="resposta-label">Resposta</p>
-            <h3 class="resposta-texto">{{ per.resposta }}</h3>
-          </div>
+    <header class="header">
+            <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
+    
+            <nav class="navbarra">
+              <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
+              <a style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
+            </nav>
+    </header>
+    <div class="mainContent">
+            <div class="top-buttons">
+                <button class="btn-box" @click="alterarAnuncio">Alterar Anuncio</button>
+                <button class="btn-box" @click="excluirAnuncio">Excluir Anuncio</button>
+            </div>
+            <div v-if="anuncios && anuncios.titulo" class="infos">
+                    <h3>{{anuncios.titulo}}</h3>
+                    <p>R$ {{ anuncios.preco }}</p>
+                    <h6>Descrição do produto</h6>
+                    <p>{{ anuncios.descricao}}</p>
+            </div>
+        <div class="interacao">
+            <form class="form-pesquisa" @submit.prevent="adicionarPergunta">
+                    <p>Envie a sua pergunta aqui</p>
+                    <input type="text" id="buscar" placeholder="Digite sua pergunta..." v-model="texto">
+                    <button id="botaoPesquisar" type="submit">Enviar pergunta</button>
+            </form>
+            <div class="perguntasRespostas" v-if="anuncios && anuncios.perguntas && anuncios.perguntas.length">
+                <div v-for="(per, index) in this.anuncios.perguntas" :key="index" class="pergunta">
+                    <h3>{{ per.texto }}</h3>
+                    <p v-if="!per.resposta" @click="mostrarInput(index)" style="cursor: pointer; color: blue;">Responder</p>
+                    <div v-if="respostaVisivel[index] && !per.resposta">
+                    <input
+                        type="text"
+                        v-model="respostas[index]"
+                        placeholder="Digite a resposta..."
+                    />
+                    <button @click="adicionarResposta(index)">Enviar</button>
+                    </div>
+                    <div v-if="per.resposta" class="resposta-bloco">
+                        <p class="resposta-label">Resposta</p>
+                        <h3 class="resposta-texto">{{ per.resposta }}</h3>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
 import axios from 'axios';
 
-export default {
-  name: 'AnuncioIndividual',
-  props: {
-    msg: String
-  },
-  data() {
-    return {
-      id: 0, titulo: "", data: "", descricao: "", preco: "", catid: "", catusu: "", perguntas: [], respostas: [], respostaVisivel: [], formOn: false,
-      anuncios: null
-    }
-  },
-  created() {
-    this.id = this.$route.params.id;
-    this.carregarDados();
-  },
-  methods: {
-    carregarDados() {
-      axios.get("http://localhost:8080/apis/anuncio/" + this.id)
-        .then(result => {
-          this.anuncios = result.data;
-          this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
-            ? this.anuncios.perguntas.map(() => false)
-            : [];
-
-          this.respostas = Array.isArray(this.anuncios.perguntas)
-            ? this.anuncios.perguntas.map(() => "")
-            : [];
-        }).catch(error => {
-          alert(error)
-        })
+export default{
+    name: 'AnuncioIndividual',
+    props:{
+        msg: String
     },
-    adicionarPergunta() {
-      axios.get("http://localhost:8080/apis/anuncio/add-pergunta/" + this.anuncios.id + "/" + this.texto)
-        .then(result => {
-          this.anuncios = result.data;
-          this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
-            ? this.anuncios.perguntas.map(() => false)
-            : [];
-          this.texto = "";
-        }).catch(error => {
-          alert(error)
-        })
+    data(){
+        return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[],respostas: [], respostaVisivel:[], mensagem:"", formOn:false,
+        anuncios: null}
     },
-    adicionarResposta(index) {
-      axios.get("http://localhost:8080/apis/pergunta/add-resposta/" + this.anuncios.perguntas[index].id + "/" + this.respostas[index]).then(result => {
-        this.anuncios = result.data; // atualiza dados com a resposta nova
-        this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
-          ? this.anuncios.perguntas.map(() => false)
-          : [];
-
-        this.respostas = Array.isArray(this.anuncios.perguntas)
-          ? this.anuncios.perguntas.map(() => "")
-          : [];
-      }).catch(error => {
-        alert(error)
-      })
-    },
-    mostrarInput(index) {
-      this.$set(this.respostaVisivel, index, true);
-    },
-    mounted() {
-      const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
-
-      if (!usuario || usuario.nivel !== 1) {
-        alert('Acesso negado! Apenas administradores podem acessar esta página.');
-        this.$router.push('/');
-      } else {
+    created() {
+        this.id = this.$route.params.id;  
         this.carregarDados();
-      }
+    },
+    methods:{
+        carregarDados(){
+            axios.get("http://localhost:8080/apis/anuncio/"+this.id)
+            .then(result=>{
+                this.anuncios=result.data;
+                this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
+                    ? this.anuncios.perguntas.map(() => false)
+                    : [];
+
+                this.respostas = Array.isArray(this.anuncios.perguntas)
+                    ? this.anuncios.perguntas.map(() => "")
+                    : [];
+            }).catch(error=>{
+                alert(error)
+            })
+        },
+        adicionarPergunta(){
+            axios.get("http://localhost:8080/apis/anuncio/add-pergunta/"+this.anuncios.id+"/"+this.texto)
+            .then(result=>{
+                this.carregarDados();
+                this.texto = "";
+            }).catch(error=>{
+                alert(error)
+            })
+        },
+        adicionarResposta(index){
+            axios.get("http://localhost:8080/apis/pergunta/add-resposta", {
+            params: {
+                id: this.anuncios.perguntas[index].id,
+                texto: this.respostas[index]
+            }
+        }).then(result=>{
+                this.carregarDados();
+            }).catch(error=>{
+                alert(error)
+            })
+        },
+        mostrarInput(index) {
+            this.respostaVisivel[index] = true;
+        },
+        excluirAnuncio(){
+            if(confirm("Deseja realmente excluir o anúncio: " + this.anuncios.titulo + "?")){
+            axios.delete("http://localhost:8080/apis/anuncio/"+this.id).then(result=>{
+              this.mensagem="Anuncio excluido com sucesso";
+              this.$router.push("/buscarAnuncios");
+            }).catch(error=>{
+                alert(error)
+            })
+          }
+        }
     }
-  }
 }
 </script>
 

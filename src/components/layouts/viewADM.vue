@@ -50,7 +50,12 @@
                             <br>
                             ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                             Clique no botão abaixo para prosseguir com a exclusão da categoria.</p>
+<<<<<<< HEAD
                             <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">CRIAR</button>
+=======
+                            <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">EXCLUIR CATEGORIA</button>
+                           
+>>>>>>> f1dfa4fdbcc18778acffd3d827f2086efbd21861
                         </div>
                         <div>
                             <h2>Excluir usuário</h2>
@@ -58,7 +63,7 @@
                             <br>
                             ⚠️ Atenção: Esta ação é irreversível.
                             Clique no botão abaixo para confirmar a exclusão do usuário.</p>
-                            <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR USUÁRIO</button>
+                            <button class="btn-box" style="margin-top: 10px;">EXCLUIR USUÁRIO</button>
                         </div>
                         <div>
                             <h2>Excluir anuncio</h2>
@@ -66,7 +71,11 @@
                             <br>
                             ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                             Clique no botão abaixo para excluir o anúncio.</p>
+<<<<<<< HEAD
                             <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR ANUNCIO</button>
+=======
+                            <button class="btn-box" style="margin-top: 10px;" @click="irParaBuscaAnuncio">EXCLUIR ANUNCIO</button>
+>>>>>>> f1dfa4fdbcc18778acffd3d827f2086efbd21861
                         </div>
                     </div>
                 </div>
@@ -85,27 +94,27 @@
 import FormAnuncio from '../forms/FormAnuncio.vue';
 import FormCategoria from '../forms/FormCategoria.vue';
 import FormUsuario from '../forms/FormUsuario.vue';
+import buscarAnuncios from './buscarAnuncios.vue';
 
 export default {
-    name: 'App',
+  name: 'MenuAdm',
+  data(){
+      return {nivel:0}
+    },
+    created() {
+        this.nivel = this.$route.params.nivel;  
+    },
     components: {
-        FormCategoria, FormUsuario, FormAnuncio
+    FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios
+  },
+  methods: {
+    irParaFormAnuncio() {
+      this.$router.push('/form-anuncio/anuncio');
     },
-    mounted() {
-        const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
-
-        if (!usuario || usuario.nivel !== 1) {
-            // Redireciona para a tela inicial caso o usuário não seja admin
-            this.$router.push('/');
-        } else {
-            this.usuario = usuario;
-        }
-    },
-    methods: {
-        irParaFormAnuncio() {
-            this.$router.push('/form-anuncio/anuncio');
-        }
+    irParaBuscaAnuncio(){
+        this.$router.push({name: "BuscarAnuncios" , params: {nivel: this.nivel}});
     }
+  }
 }
 </script>
 
