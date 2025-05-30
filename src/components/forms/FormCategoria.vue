@@ -90,9 +90,16 @@ export default {
       this.categorias.sort((a,b)=>a.nome.localeCompare(b.nome));
     }
   },
-  mounted(){
+  mounted() {
+  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+
+  if (!usuario || usuario.nivel !== 1) {
+    alert('Acesso negado! Apenas administradores podem acessar esta página.');
+    this.$router.push('/');
+  } else {
     this.carregarDados();
   }
+}
 }
 </script>
 

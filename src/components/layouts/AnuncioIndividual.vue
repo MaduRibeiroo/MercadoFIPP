@@ -1,113 +1,121 @@
 <template>
-    <header class="header">
-            <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
-    
-            <nav class="navbarra">
-              <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
-              <a style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
-            </nav>
-    </header>
-    <div class="mainContent">
-            <div class="top-buttons">
-                <button class="btn-box">Alterar Anuncio</button>
-                <button class="btn-box">Excluir Anuncio</button>
-            </div>
-            <div v-if="anuncios && anuncios.titulo" class="infos">
-                    <h3>{{anuncios.titulo}}</h3>
-                    <p>R$ {{ anuncios.preco }},00</p>
-                    <h6>Descrição do produto</h6>
-                    <p>{{ anuncios.descricao}}</p>
-            </div>
-        <div class="interacao">
-            <form class="form-pesquisa" @submit.prevent="adicionarPergunta">
-                    <p>Envie a sua pergunta aqui</p>
-                    <input type="text" id="buscar" placeholder="Digite sua pergunta..." v-model="texto">
-                    <button id="botaoPesquisar" type="submit">Enviar pergunta</button>
-            </form>
-            <div class="perguntasRespostas" v-if="anuncios?.perguntas?.length">
-                <div v-for="(per, index) in this.anuncios.perguntas" :key="index" class="pergunta">
-                    <h3>{{ per.texto }}</h3>
-                    <p v-if="!per.resposta" @click="mostrarInput(index)" style="cursor: pointer; color: blue;">Responder</p>
-                    <div v-if="respostaVisivel[index] && !per.resposta">
-                    <input
-                        type="text"
-                        v-model="respostas[index]"
-                        placeholder="Digite a resposta..."
-                    />
-                    <button @click="adicionarResposta(index)">Enviar</button>
-                    </div>
-                    <div v-if="per.resposta" class="resposta-bloco">
-                        <p class="resposta-label">Resposta</p>
-                        <h3 class="resposta-texto">{{ per.resposta }}</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <header class="header">
+    <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
+
+    <nav class="navbarra">
+      <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
+      <a style="--i:2"><router-link to="/form-usuario/Usuário">Admin</router-link></a>
+    </nav>
+  </header>
+  <div class="mainContent">
+    <div class="top-buttons">
+      <button class="btn-box">Alterar Anuncio</button>
+      <button class="btn-box">Excluir Anuncio</button>
     </div>
+    <div v-if="anuncios && anuncios.titulo" class="infos">
+      <h3>{{ anuncios.titulo }}</h3>
+      <p>R$ {{ anuncios.preco }},00</p>
+      <h6>Descrição do produto</h6>
+      <p>{{ anuncios.descricao }}</p>
+    </div>
+    <div class="interacao">
+      <form class="form-pesquisa" @submit.prevent="adicionarPergunta">
+        <p>Envie a sua pergunta aqui</p>
+        <input type="text" id="buscar" placeholder="Digite sua pergunta..." v-model="texto">
+        <button id="botaoPesquisar" type="submit">Enviar pergunta</button>
+      </form>
+      <div class="perguntasRespostas" v-if="anuncios?.perguntas?.length">
+        <div v-for="(per, index) in this.anuncios.perguntas" :key="index" class="pergunta">
+          <h3>{{ per.texto }}</h3>
+          <p v-if="!per.resposta" @click="mostrarInput(index)" style="cursor: pointer; color: blue;">Responder</p>
+          <div v-if="respostaVisivel[index] && !per.resposta">
+            <input type="text" v-model="respostas[index]" placeholder="Digite a resposta..." />
+            <button @click="adicionarResposta(index)">Enviar</button>
+          </div>
+          <div v-if="per.resposta" class="resposta-bloco">
+            <p class="resposta-label">Resposta</p>
+            <h3 class="resposta-texto">{{ per.resposta }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
 
-export default{
-    name: 'AnuncioIndividual',
-    props:{
-        msg: String
-    },
-    data(){
-        return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[],respostas: [], respostaVisivel:[], formOn:false,
-        anuncios: null}
-    },
-    created() {
-        this.id = this.$route.params.id;  
-        this.carregarDados();
-    },
-    methods:{
-        carregarDados(){
-            axios.get("http://localhost:8080/apis/anuncio/"+this.id)
-            .then(result=>{
-                this.anuncios=result.data;
-                this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
-                    ? this.anuncios.perguntas.map(() => false)
-                    : [];
-
-                this.respostas = Array.isArray(this.anuncios.perguntas)
-                    ? this.anuncios.perguntas.map(() => "")
-                    : [];
-            }).catch(error=>{
-                alert(error)
-            })
-        },
-        adicionarPergunta(){
-            axios.get("http://localhost:8080/apis/anuncio/add-pergunta/"+this.anuncios.id+"/"+this.texto)
-            .then(result=>{
-                this.anuncios=result.data;
-                this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
-                    ? this.anuncios.perguntas.map(() => false)
-                    : [];
-                this.texto = "";
-            }).catch(error=>{
-                alert(error)
-            })
-        },
-        adicionarResposta(index){
-            axios.get("http://localhost:8080/apis/pergunta/add-resposta/"+this.anuncios.perguntas[index].id+"/"+this.respostas[index]).then(result=>{
-                this.anuncios = result.data; // atualiza dados com a resposta nova
-                this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
-                    ? this.anuncios.perguntas.map(() => false)
-                    : [];
-
-                this.respostas = Array.isArray(this.anuncios.perguntas)
-                    ? this.anuncios.perguntas.map(() => "")
-                    : [];
-            }).catch(error=>{
-                alert(error)
-            })
-        },
-        mostrarInput(index) {
-            this.$set(this.respostaVisivel, index, true); 
-        },
+export default {
+  name: 'AnuncioIndividual',
+  props: {
+    msg: String
+  },
+  data() {
+    return {
+      id: 0, titulo: "", data: "", descricao: "", preco: "", catid: "", catusu: "", perguntas: [], respostas: [], respostaVisivel: [], formOn: false,
+      anuncios: null
     }
+  },
+  created() {
+    this.id = this.$route.params.id;
+    this.carregarDados();
+  },
+  methods: {
+    carregarDados() {
+      axios.get("http://localhost:8080/apis/anuncio/" + this.id)
+        .then(result => {
+          this.anuncios = result.data;
+          this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
+            ? this.anuncios.perguntas.map(() => false)
+            : [];
+
+          this.respostas = Array.isArray(this.anuncios.perguntas)
+            ? this.anuncios.perguntas.map(() => "")
+            : [];
+        }).catch(error => {
+          alert(error)
+        })
+    },
+    adicionarPergunta() {
+      axios.get("http://localhost:8080/apis/anuncio/add-pergunta/" + this.anuncios.id + "/" + this.texto)
+        .then(result => {
+          this.anuncios = result.data;
+          this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
+            ? this.anuncios.perguntas.map(() => false)
+            : [];
+          this.texto = "";
+        }).catch(error => {
+          alert(error)
+        })
+    },
+    adicionarResposta(index) {
+      axios.get("http://localhost:8080/apis/pergunta/add-resposta/" + this.anuncios.perguntas[index].id + "/" + this.respostas[index]).then(result => {
+        this.anuncios = result.data; // atualiza dados com a resposta nova
+        this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
+          ? this.anuncios.perguntas.map(() => false)
+          : [];
+
+        this.respostas = Array.isArray(this.anuncios.perguntas)
+          ? this.anuncios.perguntas.map(() => "")
+          : [];
+      }).catch(error => {
+        alert(error)
+      })
+    },
+    mostrarInput(index) {
+      this.$set(this.respostaVisivel, index, true);
+    },
+    mounted() {
+      const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+
+      if (!usuario || usuario.nivel !== 1) {
+        alert('Acesso negado! Apenas administradores podem acessar esta página.');
+        this.$router.push('/');
+      } else {
+        this.carregarDados();
+      }
+    }
+  }
 }
 </script>
 
@@ -137,16 +145,20 @@ export default{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100px 20px 40px 20px; /* era 120px, agora 100px */
+  padding: 100px 20px 40px 20px;
+  /* era 120px, agora 100px */
   position: relative;
 }
 
 .top-buttons {
   position: absolute;
-  top: 10px;      /* Adicionado espaço no topo */
-  right: 20px;    /* Botões afastados da direita */
+  top: 10px;
+  /* Adicionado espaço no topo */
+  right: 20px;
+  /* Botões afastados da direita */
   display: flex;
-  gap: 15px;      /* Espaço entre os botões */
+  gap: 15px;
+  /* Espaço entre os botões */
 }
 
 .btn-box {
@@ -162,7 +174,8 @@ export default{
   opacity: 0;
   animation: slideLeft 1s ease forwards;
   animation-delay: 1s;
-  box-shadow: none; /* Removido brilho azul */
+  box-shadow: none;
+  /* Removido brilho azul */
 }
 
 /* Quadro do anúncio */
@@ -172,18 +185,22 @@ export default{
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 95%; /* aumentou de 90% para 95% */
-  max-width: 1000px; /* aumentou de 800px para 1000px */
+  width: 95%;
+  /* aumentou de 90% para 95% */
+  max-width: 1000px;
+  /* aumentou de 800px para 1000px */
   margin-top: 20px;
   color: black;
 }
 
 .form-pesquisa {
   display: flex;
-  flex-direction: column; /* Agora empilha texto + input/botão */
+  flex-direction: column;
+  /* Agora empilha texto + input/botão */
   align-items: flex-start;
   gap: 10px;
-  margin-bottom: 20px; /* Separação das perguntas abaixo */
+  margin-bottom: 20px;
+  /* Separação das perguntas abaixo */
 }
 
 .form-pesquisa input,
@@ -192,15 +209,18 @@ export default{
 }
 
 #buscar {
-  flex: 1; /* faz o input ocupar o maior espaço possível */
+  flex: 1;
+  /* faz o input ocupar o maior espaço possível */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  max-width: 600px; /* limita largura para evitar ficar grande demais */
+  max-width: 600px;
+  /* limita largura para evitar ficar grande demais */
 }
 
 .pergunta h3:last-of-type {
-  margin-left: 30px; /* Indenta a resposta */
+  margin-left: 30px;
+  /* Indenta a resposta */
   font-weight: normal;
   color: #333;
 }
@@ -220,9 +240,11 @@ export default{
 }
 
 .pergunta {
-  margin-bottom: 30px; /* Aumenta o espaço entre grupos de pergunta/resposta */
+  margin-bottom: 30px;
+  /* Aumenta o espaço entre grupos de pergunta/resposta */
   padding-bottom: 15px;
-  border-bottom: 1px solid #e0e0e0; /* Linha para separar visualmente */
+  border-bottom: 1px solid #e0e0e0;
+  /* Linha para separar visualmente */
 }
 
 .resposta-bloco {

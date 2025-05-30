@@ -23,8 +23,8 @@
         </thead>
         <tbody>
           <tr v-for="cat in this.categorias">
-            <td>{{cat.id}}</td>
-            <td>{{cat.nome}}</td>
+            <td>{{ cat.id }}</td>
+            <td>{{ cat.nome }}</td>
           </tr>
         </tbody>
       </table>
@@ -40,55 +40,63 @@ export default {
   props: {
     msg: String
   },
-  data(){
-    return {id:0, nome:"",formOn:false, 
-    categorias:[]}
-  },
-  methods:{
-    mostrarForm(flag)
-    {
-      this.formOn=flag;
-    },
-    gravar(){
-      const url = 'http://localhost:8080/apis/categoria';
-      const data = { id: this.id, nome: this.nome};
-      axios.post(url, data)
-      .then(response => {
-        this.carregarDados();
-      })
-      .catch(error => {
-        alert('Erro:', error);
-      });
-      this.mostrarForm(false);
-    },
-    apagar(id){
-      axios.delete("http://localhost:8080/apis/categoria/"+id)
-      .then(result=>{this.carregarDados()})
-      .catch(error=>{alert(error)})
-    },
-    alterar(id){
-      this.formOn=true;
-      axios.get("http://localhost:8080/apis/categoria/"+id)
-      .then(result=>{        
-        const categoria=result.data;
-        this.id=categoria.id;
-        this.nome=categoria.nome;
-      })
-      .catch(error=>{alert(error)})
-
-      alert('Alterando '+id);
-    },
-    carregarDados(){
-      axios.get("http://localhost:8080/apis/categoria")
-      .then(result=>{this.categorias=result.data})
-      .catch(error=>{alert(error)})
-    },
-    ordenarNome(){
-      this.categorias.sort((a,b)=>a.nome.localeCompare(b.nome));
+  data() {
+    return {
+      id: 0, nome: "", formOn: false,
+      categorias: []
     }
   },
-  mounted(){
-    this.carregarDados();
+  methods: {
+    mostrarForm(flag) {
+      this.formOn = flag;
+    },
+    gravar() {
+      const url = 'http://localhost:8080/apis/categoria';
+      const data = { id: this.id, nome: this.nome };
+      axios.post(url, data)
+        .then(response => {
+          this.carregarDados();
+        })
+        .catch(error => {
+          alert('Erro:', error);
+        });
+      this.mostrarForm(false);
+    },
+    apagar(id) {
+      axios.delete("http://localhost:8080/apis/categoria/" + id)
+        .then(result => { this.carregarDados() })
+        .catch(error => { alert(error) })
+    },
+    alterar(id) {
+      this.formOn = true;
+      axios.get("http://localhost:8080/apis/categoria/" + id)
+        .then(result => {
+          const categoria = result.data;
+          this.id = categoria.id;
+          this.nome = categoria.nome;
+        })
+        .catch(error => { alert(error) })
+
+      alert('Alterando ' + id);
+    },
+    carregarDados() {
+      axios.get("http://localhost:8080/apis/categoria")
+        .then(result => { this.categorias = result.data })
+        .catch(error => { alert(error) })
+    },
+    ordenarNome() {
+      this.categorias.sort((a, b) => a.nome.localeCompare(b.nome));
+    }
+  },
+  mounted() {
+    const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+
+    if (!usuario || usuario.nivel !== 1) {
+      alert('Acesso negado! Apenas administradores podem acessar esta página.');
+      this.$router.push('/');
+    } else {
+      this.carregarDados();
+    }
   }
 }
 </script>
