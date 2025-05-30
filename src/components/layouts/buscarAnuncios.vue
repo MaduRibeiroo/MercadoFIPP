@@ -44,7 +44,7 @@ export default{
       anuncios:[]}
     },
     created() {
-        this.nivel = this.$route.params.nivel; 
+        this.nivel = this.$route.query.nivel; 
         this.carregarDados();
     },
     methods:{
@@ -70,7 +70,7 @@ export default{
             })
         },
         irParaAnuncioIndividual(anuncio) {
-            this.$router.push({name: "AnuncioIndividual" , params: {id: anuncio.id}});
+            this.$router.push({name: "AnuncioIndividual" , params: {id: anuncio.id}, query: { nivel: this.nivel }});
         },
         excluirAnuncio(anuncio){
             if(confirm("Deseja realmente excluir o anúncio: " + this.anuncio.titulo + "?")){
