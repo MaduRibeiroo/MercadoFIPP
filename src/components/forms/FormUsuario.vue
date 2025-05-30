@@ -21,15 +21,15 @@
           <tr>
             <th>Id</th>
             <th @click="ordenarNome()">Nome</th>
-            <th >Senha</th>
+            <th>Senha</th>
             <th colspan="2">Ações</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="usu in this.usuarios">
-            <td>{{usu.id}}</td>
-            <td>{{usu.nome}}</td>
-            <td>{{usu.senha}}</td>
+            <td>{{ usu.id }}</td>
+            <td>{{ usu.nome }}</td>
+            <td>{{ usu.senha }}</td>
             <td><button @click="this.alterar(usu.id)">Alterar</button></td>
             <td><button @click="this.apagar(usu.id)">Apagar</button></td>
           </tr>
@@ -47,55 +47,63 @@ export default {
   props: {
     msg: String
   },
-  data(){
-    return {id:0, nome:"", senha:"", formOn:false,
-    usuarios:[]}
-  },
-  methods:{
-    mostrarForm(flag)
-    {
-      this.formOn=flag;
-    },
-    gravar(){
-      const url = 'http://localhost:8080/apis/usuario';
-      const data = { id: this.id, nome: this.nome, senha: this.senha};
-      axios.post(url, data)
-      .then(response => {
-        this.carregarDados();
-      })
-      .catch(error => {
-        alert('Erro:', error);
-      });
-      this.mostrarForm(false);
-    },
-    apagar(id){
-      axios.delete("http://localhost:8080/apis/usuario/"+id)
-      .then(result=>{this.carregarDados()})
-      .catch(error=>{alert(error)})
-    },
-    alterar(id){
-      this.formOn=true;
-      axios.get("http://localhost:8080/apis/usuario/"+id)
-      .then(result=>{        
-        const categoria=result.data;
-        this.id=categoria.id;
-        this.nome=categoria.nome;
-        this.senha=categoria.senha;
-      })
-      .catch(error=>{alert(error)})
-
-    },
-    carregarDados(){
-      axios.get("http://localhost:8080/apis/usuario")
-      .then(result=>{this.usuarios=result.data})
-      .catch(error=>{alert(error)})
-    },
-    ordenarNome(){
-      this.usuarios.sort((a,b)=>a.nome.localeCompare(b.nome));
+  data() {
+    return {
+      id: 0, nome: "", senha: "", formOn: false,
+      usuarios: []
     }
   },
-  mounted(){
-    this.carregarDados();
+  methods: {
+    mostrarForm(flag) {
+      this.formOn = flag;
+    },
+    gravar() {
+      const url = 'http://localhost:8080/apis/usuario';
+      const data = { id: this.id, nome: this.nome, senha: this.senha };
+      axios.post(url, data)
+        .then(response => {
+          this.carregarDados();
+        })
+        .catch(error => {
+          alert('Erro:', error);
+        });
+      this.mostrarForm(false);
+    },
+    apagar(id) {
+      axios.delete("http://localhost:8080/apis/usuario/" + id)
+        .then(result => { this.carregarDados() })
+        .catch(error => { alert(error) })
+    },
+    alterar(id) {
+      this.formOn = true;
+      axios.get("http://localhost:8080/apis/usuario/" + id)
+        .then(result => {
+          const categoria = result.data;
+          this.id = categoria.id;
+          this.nome = categoria.nome;
+          this.senha = categoria.senha;
+        })
+        .catch(error => { alert(error) })
+
+    },
+    carregarDados() {
+      axios.get("http://localhost:8080/apis/usuario")
+        .then(result => { this.usuarios = result.data })
+        .catch(error => { alert(error) })
+    },
+    ordenarNome() {
+      this.usuarios.sort((a, b) => a.nome.localeCompare(b.nome));
+    }
+  },
+  mounted() {
+    const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+
+    if (!usuario || usuario.nivel !== 1) {
+      alert('Acesso negado! Apenas administradores podem acessar esta página.');
+      this.$router.push('/');
+    } else {
+      this.carregarDados();
+    }
   }
 }
 </script>

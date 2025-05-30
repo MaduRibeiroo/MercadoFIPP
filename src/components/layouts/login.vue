@@ -30,6 +30,37 @@
           </div>
           <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
             
+<<<<<<< HEAD
+              <form @submit.prevent="login">
+                <div class="wrapper">
+                  <div class="card-switch">
+                      <label class="switch">
+                        <input type="checkbox" class="toggle">
+                        <span class="slider"></span>
+                        <span class="card-side"></span>
+                        <div class="flip-card__inner">
+                            <div class="flip-card__front">
+                              <div class="title">Log in</div>
+                              <div class="flip-card__div" action="">
+                                  <input class="flip-card__input" v-model="nome" placeholder="Nome" type="nome">
+                                  <input class="flip-card__input" v-model="senha" placeholder="Senha" type="password">
+                                  <button class="flip-card__btn" @click="login">Logar!</button>
+                              </div>
+                            </div>
+                            <div class="flip-card__back">
+                              <div class="title">Cadastrar</div>
+                              <div class="flip-card__div" action="">
+                                  <input class="flip-card__input" v-model="nome" placeholder="Nome" type="nome">
+                                  <input class="flip-card__input" v-model="senha" placeholder="Senha" type="password">
+                                  <button class="flip-card__btn" @click="cadastrarUsuario">Cadastrar!</button>
+                              </div>
+                            </div>
+                        </div>
+                      </label>
+                  </div>   
+                </div>
+              </form>
+=======
             <form @submit.prevent="login">
               <div class="wrapper">
                 <div class="card-switch">
@@ -59,6 +90,7 @@
                 </div>   
               </div>
             </form>
+>>>>>>> 5e6f82737e90108774892406dd81b3a183af7941
           </div>
         </div>
       </div>
@@ -89,9 +121,9 @@ export default {
           localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
 
           if (usuario.nivel === 1) {
-            this.$router.push('/view-adm/' + usuario.nome);
+            this.$router.push('/view-adm/');
           } else if (usuario.nivel === 2 || usuario.nivel === 3) {
-            this.$router.push('/main-view/' + usuario.nome);
+            this.$router.push('/Menu/');
           } else {
             this.erro = 'Nível de acesso desconhecido.';
           }

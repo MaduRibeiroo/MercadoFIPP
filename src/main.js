@@ -17,7 +17,7 @@ const router = createRouter({
     routes: [
     { path: '/', component: login, props: true},
     { path: '/Menu', component: MainView, props: true},
-    { path: '/view-ADM', component: ViewADM, props: true},
+    { path: '/view-adm', component: ViewADM, props: true},
     { path: '/view-categoria', component: ViewCat, props: true},
     { path: '/form-categorias/:msg', component: FormCategoria, props: true },
     { path: '/form-usuario/:msg', component: FormUsuario, props: true  },

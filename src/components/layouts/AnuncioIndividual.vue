@@ -142,16 +142,20 @@ export default{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100px 20px 40px 20px; /* era 120px, agora 100px */
+  padding: 100px 20px 40px 20px;
+  /* era 120px, agora 100px */
   position: relative;
 }
 
 .top-buttons {
   position: absolute;
-  top: 10px;      /* Adicionado espaço no topo */
-  right: 20px;    /* Botões afastados da direita */
+  top: 10px;
+  /* Adicionado espaço no topo */
+  right: 20px;
+  /* Botões afastados da direita */
   display: flex;
-  gap: 15px;      /* Espaço entre os botões */
+  gap: 15px;
+  /* Espaço entre os botões */
 }
 
 .btn-box {
@@ -167,7 +171,8 @@ export default{
   opacity: 0;
   animation: slideLeft 1s ease forwards;
   animation-delay: 1s;
-  box-shadow: none; /* Removido brilho azul */
+  box-shadow: none;
+  /* Removido brilho azul */
 }
 
 /* Quadro do anúncio */
@@ -177,18 +182,22 @@ export default{
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 95%; /* aumentou de 90% para 95% */
-  max-width: 1000px; /* aumentou de 800px para 1000px */
+  width: 95%;
+  /* aumentou de 90% para 95% */
+  max-width: 1000px;
+  /* aumentou de 800px para 1000px */
   margin-top: 20px;
   color: black;
 }
 
 .form-pesquisa {
   display: flex;
-  flex-direction: column; /* Agora empilha texto + input/botão */
+  flex-direction: column;
+  /* Agora empilha texto + input/botão */
   align-items: flex-start;
   gap: 10px;
-  margin-bottom: 20px; /* Separação das perguntas abaixo */
+  margin-bottom: 20px;
+  /* Separação das perguntas abaixo */
 }
 
 .form-pesquisa input,
@@ -197,15 +206,18 @@ export default{
 }
 
 #buscar {
-  flex: 1; /* faz o input ocupar o maior espaço possível */
+  flex: 1;
+  /* faz o input ocupar o maior espaço possível */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  max-width: 600px; /* limita largura para evitar ficar grande demais */
+  max-width: 600px;
+  /* limita largura para evitar ficar grande demais */
 }
 
 .pergunta h3:last-of-type {
-  margin-left: 30px; /* Indenta a resposta */
+  margin-left: 30px;
+  /* Indenta a resposta */
   font-weight: normal;
   color: #333;
 }
@@ -225,9 +237,11 @@ export default{
 }
 
 .pergunta {
-  margin-bottom: 30px; /* Aumenta o espaço entre grupos de pergunta/resposta */
+  margin-bottom: 30px;
+  /* Aumenta o espaço entre grupos de pergunta/resposta */
   padding-bottom: 15px;
-  border-bottom: 1px solid #e0e0e0; /* Linha para separar visualmente */
+  border-bottom: 1px solid #e0e0e0;
+  /* Linha para separar visualmente */
 }
 
 .resposta-bloco {
