@@ -10,7 +10,7 @@
     </header>
     <div class="mainContent">
             <div class="top-buttons">
-                <button v-if="nivel == 2" class="btn-box" @click="alterarAnuncio">Alterar Anuncio</button>
+                <button v-if="nivel == 2 || nivel==1" class="btn-box" @click="alterarAnuncio">Alterar Anuncio</button>
                 <button v-if="nivel == 1" class="btn-box" @click="excluirAnuncio">Excluir Anuncio</button>
             </div>
             <div v-if="anuncios && anuncios.titulo" class="infos">
