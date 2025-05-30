@@ -17,9 +17,7 @@
         <input type="submit" value="Cadastrar">
       </form>
     </div>
-    <div style="display: flex; justify-content: flex-end;">
-      <button @click="this.mostrarForm(true)">Nova Categoria</button>
-    </div>
+    
     <div>
       <table id="customers">
         <thead>

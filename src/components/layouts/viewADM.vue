@@ -29,7 +29,7 @@
                     total controle e gestão sobre os principais elementos da plataforma, garantindo segurança,
                     organização e eficiência no gerenciamento de dados.</p>
                 <p style="margin-top: -30px;">Deseja verificar quais as categorias existentes?</p>
-                <a class="btn-box" @click="irCategoriaADM">CATEGORIAS</a>
+                <a class="btn-box" @click="irCategoriaADM">CATEGORIA</a>
             </div>
         </section>
 
