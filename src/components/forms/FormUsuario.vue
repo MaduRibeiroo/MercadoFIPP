@@ -100,7 +100,7 @@ export default {
 
     if (!usuario || usuario.nivel !== 1) {
       alert('Acesso negado! Apenas administradores podem acessar esta página.');
-      this.$router.push('/');
+      this.$router.push('/Menu');
     } else {
       this.carregarDados();
     }
