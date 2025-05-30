@@ -27,9 +27,9 @@
         <input type="text" id="price" v-model="preco" placeholder="Preço..">
 
         <label for="idcat">Id categoria</label>
-        <input type="text" id="idcat" v-model="catid" placeholder="Id da categoria..">
+        <input type="number" id="idcat" v-model="catid" placeholder="Id da categoria..">
         <label for="idusu">Id do usuario</label>
-        <input type="text" id="idusu" v-model="usrid" placeholder="Id do usuario..">
+        <input type="number" id="idusu" v-model="usrid" placeholder="Id do usuario..">
         <input type="submit" value="Confirmar">
       </form>
     </div>
@@ -58,7 +58,7 @@
           <td>{{ anu.descricao }}</td>
           <td>{{ anu.preco }}</td>
           <td>{{ anu.catid }}</td>
-          <td>{{ anu.catusu }}</td>
+          <td>{{ anu.usrid }}</td>
           <td><button @click="this.alterar(anu.id)">Alterar</button></td>
           <td v-if="nivel == 1"><button @click="this.apagar(anu.id)">Apagar</button></td>
         </tr>
@@ -74,7 +74,7 @@ export default {
   name: 'FormAnuncio',
   data() {
     return {
-      id: 0, titulo: "", data: "", descricao: "", preco: "", catid: "", catusu: "", nivel:0, modoAlterar: false, formOn: false,
+      id: 0, titulo: "", data: "", descricao: "", preco: "", catid: 0, usrid: 0, nivel:0, modoAlterar: false, formOn: false,
       anuncios: []
     }
   },
