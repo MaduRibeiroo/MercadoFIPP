@@ -13,7 +13,8 @@
                 <h3>Bem vindo ao</h3>
                 <h1>Painel Administrativo do Mercado FIPP</h1>
                 <h3>Somos uma empresa especializadas em <span style="color: #53bafff7;">Vendas</span></h3>
-                <p>Esse painel é acessível apenas por administradores autorizados, garantindo que todas as ações realizadas sejam seguras e registradas conforme as boas práticas de governança digital.</p>
+                <p>Esse painel é acessível apenas por administradores autorizados, garantindo que todas as ações
+                    realizadas sejam seguras e registradas conforme as boas práticas de governança digital.</p>
             </div>
             <span class="home-imgHover"></span>
         </section>
@@ -24,9 +25,11 @@
             </div>
             <div class="sobre-texto">
                 <h2>Sobre o <span>Painel Administrativo</span></h2>
-                <p>Bem-vindo ao Painel Administrativo do nosso sistema. Esta interface foi desenvolvida para oferecer total controle e gestão sobre os principais elementos da plataforma, garantindo segurança, organização e eficiência no gerenciamento de dados.</p>
+                <p>Bem-vindo ao Painel Administrativo do nosso sistema. Esta interface foi desenvolvida para oferecer
+                    total controle e gestão sobre os principais elementos da plataforma, garantindo segurança,
+                    organização e eficiência no gerenciamento de dados.</p>
                 <p style="margin-top: -30px;">Deseja verificar quais as categorias existentes?</p>
-                <a class="btn-box">CATEGORIAS</a>
+                <a class="btn-box" @click="irCategoriaADM">CATEGORIA</a>
             </div>
         </section>
 
@@ -37,12 +40,16 @@
                     <div class="relatorio-lista">
                         <div>
                             <h2>Excluir categoria</h2>
-                            <p>Se você deseja remover uma categoria do sistema, utilize o botão abaixo. Essa ação é recomendada apenas quando a categoria não for mais necessária ou estiver em desuso, pois ao excluí-la, todos os vínculos com anúncios ou dados relacionados serão perdidos.
-                            <br>
-                            ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
-                            Clique no botão abaixo para prosseguir com a exclusão da categoria.</p>
-                            <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">EXCLUIR CATEGORIA</button>
-                           
+                            <p>Se você deseja remover uma categoria do sistema, utilize o botão abaixo. Essa ação é
+                                recomendada apenas quando a categoria não for mais necessária ou estiver em desuso, pois
+                                ao excluí-la, todos os vínculos com anúncios ou dados relacionados serão perdidos.
+                                <br>
+                                ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
+                                Clique no botão abaixo para prosseguir com a exclusão da categoria.
+                            </p>
+                            <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">EXCLUIR
+                                CATEGORIA</button>
+
                         </div>
                         <div>
                             <h2>Excluir usuário</h2>
@@ -50,14 +57,17 @@
                             <br>
                             ⚠️ Atenção: Esta ação é irreversível.
                             Clique no botão abaixo para confirmar a exclusão do usuário.</p>
-                            <button class="btn-box" style="margin-top: 10px;">EXCLUIR USUÁRIO</button>
+                            <button class="btn-box" style="margin-top: 10px;" @click="excluirUsuario">EXCLUIR USUÁRIO</button>
                         </div>
                         <div>
                             <h2>Excluir anuncio</h2>
-                            <p>Para remover um anúncio da plataforma, clique no botão abaixo. Isso pode ser necessário em casos de conteúdo inadequado, anúncios expirados ou quando não estiverem de acordo com as políticas da plataforma.
-                            <br>
-                            ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
-                            Clique no botão abaixo para excluir o anúncio.</p>
+                            <p>Para remover um anúncio da plataforma, clique no botão abaixo. Isso pode ser necessário
+                                em casos de conteúdo inadequado, anúncios expirados ou quando não estiverem de acordo
+                                com as políticas da plataforma.
+                                <br>
+                                ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
+                                Clique no botão abaixo para excluir o anúncio.
+                            </p>
                             <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR ANUNCIO</button>
                         </div>
                     </div>
@@ -80,24 +90,36 @@ import FormUsuario from '../forms/FormUsuario.vue';
 import buscarAnuncios from './buscarAnuncios.vue';
 
 export default {
-  name: 'MenuAdm',
-  data(){
-      return {nivel:0}
+    name: 'MenuAdm',
+    data() {
+        return { nivel: 0 }
     },
+    mounted() {
+        const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+
+        if (!usuario || usuario.nivel !== 1) {
+            // Redireciona para a tela inicial caso o usuário não seja admin
+            this.$router.push('/');
+        } else {
+            this.usuario = usuario;
+        }
+    }
+    ,
     created() {
-        this.nivel = this.$route.query.nivel;  
+        this.nivel = this.$route.query.nivel;
     },
     components: {
-    FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios
-  },
-  methods: {
-    irParaFormAnuncio() {
-      this.$router.push('/form-anuncio/anuncio');
+        FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios
     },
     irParaBuscaAnuncio(){
         this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});
+    },
+    irCategoriaADM() {
+      this.$router.push('/view-categoria-adm');
+    },
+    excluirUsuario(){
+        this.$router.push('/form-usuario/usuario');
     }
-  }
 }
 </script>
 

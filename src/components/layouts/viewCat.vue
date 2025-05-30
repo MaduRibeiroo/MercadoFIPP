@@ -17,9 +17,7 @@
         <input type="submit" value="Cadastrar">
       </form>
     </div>
-    <div style="display: flex; justify-content: flex-end;">
-      <button @click="this.mostrarForm(true)">Nova Categoria</button>
-    </div>
+    
     <div>
       <table id="customers">
         <thead>
@@ -96,14 +94,7 @@ export default {
     }
   },
   mounted() {
-    const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
-
-    if (!usuario || usuario.nivel !== 1) {
-      alert('Acesso negado! Apenas administradores podem acessar esta página.');
-      this.$router.push('/');
-    } else {
       this.carregarDados();
-    }
   }
 }
 </script>
@@ -159,7 +150,7 @@ div {
 }
 
 #customers tr:hover {
-  background-color: #ddd;
+  background-color: #1212;
 }
 
 #customers th {

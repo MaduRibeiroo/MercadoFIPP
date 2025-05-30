@@ -29,7 +29,7 @@
                 <h2>Sobre o <span>Mercado FIPP</span></h2>
                 <p>Aqui, você pode criar seu perfil, publicar anúncios em diversas categorias, adicionar fotos dos seus produtos e tirar dúvidas diretamente com os vendedores por meio de perguntas e respostas nos anúncios. Nosso objetivo é facilitar a negociação entre os usuários, promovendo um ambiente colaborativo e eficiente. Explore as categorias, publique seu anúncio e aproveite tudo que o Mercado FIPP tem a oferecer!</p>
                 <p style="margin-top: -30px;">Deseja verificar quais as categorias existentes?</p>
-                <a class="btn-box" @click="irParaCategoria">Categoria</a>
+                <a class="btn-box" @click="irParaCategoria">CATEGORIA</a>
             </div>
         </section>
     
@@ -85,7 +85,7 @@ export default {
       this.$router.push({name: "FormAnuncios" , params: { msg: "algumaMensagem" }, query: { nivel: this.nivel }});
     },
     irParaCategoria() {
-      this.$router.push('/view-cat');
+      this.$router.push('/view-categoria');
     },
     irParaBuscaAnuncios(){
         this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});

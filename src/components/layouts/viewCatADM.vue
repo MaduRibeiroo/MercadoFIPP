@@ -159,7 +159,7 @@ div {
 }
 
 #customers tr:hover {
-  background-color: #ddd;
+  background-color: #1212;
 }
 
 #customers th {

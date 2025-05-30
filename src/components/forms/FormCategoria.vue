@@ -1,44 +1,69 @@
 <template>
-  <header class="header">
-    <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
-
-    <nav class="navbarra">
-      <a style="--i:2">USUARIO</a>
-    </nav>
-  </header>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <h1 class="sub-title" style="margin-top: 100px;"><span>Anuncio</span></h1>
+  <div class="hello" style="width: 50%; margin-left: auto; margin-right: auto; margin-bottom: 200px;">
     <div v-if="formOn">
       <form @submit.prevent="this.gravar()">
-        <label for="idcat">Id</label>
-        <input type="text" id="idcat" v-model="id" placeholder="ID da Categoria..">
-        <label for="name">Nome</label>
-        <input type="text" id="name" v-model="nome" placeholder="Nome da Categoria..">
-        <input type="submit" value="Cadastrar">
+        <label for="idanun">Id</label>
+        <input type="text" id="idanun" v-model="id" placeholder="ID do Anuncio..">
+
+        <label for="title">Titulo</label>
+        <input type="text" id="title" v-model="titulo" placeholder="Titulo do anuncio..">
+
+        <label for="date">Data</label>
+        <input type="text" id="date" v-model="data" placeholder="Data..">
+
+        <label for="desc">Descrição</label>
+        <input type="text" id="desc" v-model="descricao" placeholder="Descrição..">
+
+        <label for="price">Preço</label>
+        <input type="text" id="price" v-model="preco" placeholder="Preço..">
+
+        <label for="idcat">Id categoria</label>
+        <input type="text" id="idcat" v-model="catid" placeholder="Id da categoria..">
+
+        <label for="idusu">Id do usuario</label>
+        <input type="text" id="idusu" v-model="catusu" placeholder="Id do usuario..">
+
+        <label for="foto">Foto</label>
+        <input type="file" id="foto" @change="onFileChange">
+
+        <input type="submit" value="Confirmar">
       </form>
     </div>
-    <div style="display: flex; justify-content: flex-end;">
-      <button @click="this.mostrarForm(true)">Nova Categoria</button>
-    </div>
-    <div>
-      <table id="customers">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th @click="ordenarNome()">Nome</th>
-            <th colspan="2">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="cat in this.categorias">
-            <td>{{cat.id}}</td>
-            <td>{{cat.nome}}</td>
-            <td><button @click="this.alterar(cat.id)">Alterar</button></td>
-            <td><button @click="this.apagar(cat.id)">Apagar</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+
+    <button @click="this.mostrarForm(true)">Novo Anuncio</button>
+
+    <table id="add">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th @click="ordenarTitulo()">Titulo</th>
+          <th>Data</th>
+          <th>Descrição</th>
+          <th>Preço</th>
+          <th>Cat id</th>
+          <th>Usu id</th>
+          <th>Foto</th>
+          <th colspan="2">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="anu in this.anuncios" :key="anu.id">
+          <td>{{ anu.id }}</td>
+          <td>{{ anu.titulo }}</td>
+          <td>{{ anu.data }}</td>
+          <td>{{ anu.descricao }}</td>
+          <td>{{ anu.preco }}</td>
+          <td>{{ anu.catid }}</td>
+          <td>{{ anu.catusu }}</td>
+          <td>
+            <img :src="getImageUrl(anu.foto)" alt="Foto" style="width: 100px; height: auto;" v-if="anu.foto">
+          </td>
+          <td><button @click="this.alterar(anu.id)">Alterar</button></td>
+          <td><button @click="this.apagar(anu.id)">Apagar</button></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -46,72 +71,104 @@
 import axios from 'axios'
 
 export default {
-  name: 'FormCategoria',
-  props: {
-    msg: String
+  name: 'FormAnuncio',
+  data() {
+    return {
+      id: 0,
+      titulo: "",
+      data: "",
+      descricao: "",
+      preco: "",
+      catid: "",
+      catusu: "",
+      foto: null,  // <- foto como File
+      formOn: false,
+      anuncios: []
+    }
   },
-  data(){
-    return {id:0, nome:"",formOn:false, 
-    categorias:[]}
-  },
-  methods:{
-    mostrarForm(flag)
-    {
-      this.formOn=flag;
+  methods: {
+    mostrarForm(flag) {
+      this.formOn = flag;
     },
-    gravar(){
-      const url = 'http://localhost:8080/apis/categoria';
-      const data = { id: this.id, nome: this.nome};
-      axios.post(url, data)
+    onFileChange(event) {
+      this.foto = event.target.files[0];
+    },
+    gravar() {
+      const url = 'http://localhost:8080/apis/anuncio/';
+      const formData = new FormData();
+
+      formData.append('id', this.id);
+      formData.append('titulo', this.titulo);
+      formData.append('data', this.data);
+      formData.append('descricao', this.descricao);
+      formData.append('preco', this.preco);
+      formData.append('catid', this.catid);
+      formData.append('catusu', this.catusu);
+
+      if (this.foto) {
+        formData.append('foto', this.foto);
+      }
+
+      axios.post(url, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
       .then(response => {
         this.carregarDados();
       })
       .catch(error => {
-        alert('Erro:', error);
+        alert('Erro: ' + error);
       });
+
       this.mostrarForm(false);
     },
-    apagar(id){
-      axios.delete("http://localhost:8080/apis/categoria/"+id)
-      .then(result=>{this.carregarDados()})
-      .catch(error=>{alert(error)})
+    apagar(id) {
+      axios.delete("http://localhost:8080/apis/anuncio/" + id)
+        .then(() => { this.carregarDados() })
+        .catch(error => { alert(error) })
     },
-    alterar(id){
-      this.formOn=true;
-      axios.get("http://localhost:8080/apis/categoria/"+id)
-      .then(result=>{        
-        const categoria=result.data;
-        this.id=categoria.id;
-        this.nome=categoria.nome;
-      })
-      .catch(error=>{alert(error)})
-
-      alert('Alterando '+id);
+    alterar(id) {
+      this.formOn = true;
+      axios.get("http://localhost:8080/apis/anuncio/" + id)
+        .then(result => {
+          const anuncio = result.data;
+          this.id = anuncio.id;
+          this.titulo = anuncio.titulo;
+          this.data = anuncio.data;
+          this.descricao = anuncio.descricao;
+          this.preco = anuncio.preco;
+          this.catid = anuncio.catid;
+          this.catusu = anuncio.catusu;
+        })
+        .catch(error => { alert(error) })
     },
-    carregarDados(){
-      axios.get("http://localhost:8080/apis/categoria")
-      .then(result=>{this.categorias=result.data})
-      .catch(error=>{alert(error)})
+    carregarDados() {
+      axios.get("http://localhost:8080/apis/anuncio")
+        .then(result => { this.anuncios = result.data })
+        .catch(error => { alert(error) })
     },
-    ordenarNome(){
-      this.categorias.sort((a,b)=>a.nome.localeCompare(b.nome));
+    ordenarTitulo() {
+      this.anuncios.sort((a, b) => a.titulo.localeCompare(b.titulo));
+    },
+    getImageUrl(foto) {
+      if (!foto) return '';
+      return `http://localhost:8080/uploads/${foto}`;
     }
   },
   mounted() {
-  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+    const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
 
-  if (!usuario || usuario.nivel !== 1) {
-    alert('Acesso negado! Apenas administradores podem acessar esta página.');
-    this.$router.push('/');
-  } else {
-    this.carregarDados();
+    if (!usuario || usuario.nivel !== 1) {
+      alert('Acesso negado! Apenas administradores podem acessar esta página.');
+      this.$router.push('/');
+    } else {
+      this.carregarDados();
+    }
   }
-}
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+/* Mantém todo o estilo igual ao que você já enviou */
 input[type=text],
 select {
   width: 100%;
@@ -125,7 +182,7 @@ select {
 
 input[type=submit] {
   width: 100%;
-  background-color: #4CAF50;
+  background-color: #225c24;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -140,74 +197,37 @@ input[type=submit]:hover {
 
 div {
   border-radius: 5px;
-  background-color: #91a1ff;
+  background-color: #f2f2f2;
   padding: 20px;
 }
 
-#customers {
+#add {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-#customers td,
-#customers th {
+#add td,
+#add th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#customers tr:nth-child(even) {
+#add tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#customers tr:hover {
+#add tr:hover {
   background-color: #ddd;
 }
 
-#customers th {
+#add th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #04AA6D;
+  background-color: #000143;
   color: white;
 }
 
-
-.header{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 10px;
-    background-color: #000143;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;}
-
-.logo{
-    position: relative;
-    font-size: 25px;
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    cursor: default;
-    opacity: 0;
-    animation: slideRight 1s ease forwards;}
-
-.navbarra a{
-    display: inline-block;
-    font-size: 25px;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    margin-left: 35px;
-    transition: slideTop .5s ease forwards;
-    opacity: 0;
-    animation: slideLeft 1s ease forwards;
-    animation-delay: calc(.2s * var(--i))}
-
-.navbarra a:houver{
-    color: #53bafff7;}
-
+/* ... restante do estilo como já está */
 </style>
