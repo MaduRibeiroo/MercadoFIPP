@@ -5,7 +5,6 @@
             <a href="#" class="logo">Mercado FIPP</a>
 
             <nav class="navbarra">
-<<<<<<< HEAD
                 <a style="--i:1"><router-link to="/form-categorias/Categorias">Categoria</router-link></a>
                 <a style="--i:2">ADMIN</a>
                 <!--<a href="#id-home" style="--i:1" class="active">Home</a>
@@ -22,19 +21,6 @@
                 <p>O Mercado FIPP é a plataforma ideal para comprar, vender e interagir de forma prática e segura.</p>
             </div>
             <span class="home-imgHover"></span>
-=======
-              <a style="--i:2">ADMIN</a>
-            </nav>
-        </header>
-        <section class="home" id="id-home">
-        <div class="home-conteudo">
-            <h3>Bem vindo ao</h3>
-            <h1> Painel Administrativo do Mercado FIPP</h1>
-            <h3>Somos uma empresa especializadas em <span style="color: #53bafff7;">Vendas</span></h3>
-            <p>O Mercado FIPP é a plataforma ideal para comprar, vender e interagir de forma prática e segura.</p>
-        </div>
-        <span class="home-imgHover"></span>
->>>>>>> 5e6f82737e90108774892406dd81b3a183af7941
         </section>
 
         <section style="margin-top: 100px;" class="sobre" id="id-sobre">
@@ -42,7 +28,6 @@
                 <img src="/src/assets/lobo.png">
             </div>
             <div class="sobre-texto">
-<<<<<<< HEAD
                 <h2>Sobre o <span>Mercado FIPP</span></h2>
                 <p>Aqui, você pode criar seu perfil, publicar anúncios em diversas categorias, adicionar fotos dos seus
                     produtos e tirar dúvidas diretamente com os vendedores por meio de perguntas e respostas nos
@@ -51,12 +36,6 @@
                     FIPP tem a oferecer!</p>
                 <p style="margin-top: -30px;">Deseja se cadastrar um usuário?</p>
                 <a class="btn-box"><router-link to="/form-usuario/Usuário">Usuário</router-link></a>
-=======
-                <h2>Sobre o <span>Painel Administrativo</span></h2>
-                <p>Bem-vindo ao Painel Administrativo do nosso sistema. Esta interface foi desenvolvida para oferecer total controle e gestão sobre os principais elementos da plataforma, garantindo segurança, organização e eficiência no gerenciamento de dados. Aqui você tem o controle de exclusão de categoria, usuario e anuncio.</p>
-                <p style="margin-top: -30px;">Deseja se coneferir as tabelas de categoria?</p>
-                <a class="btn-box" @click="verCat">CATEGORIA</a>
->>>>>>> 5e6f82737e90108774892406dd81b3a183af7941
             </div>
         </section>
 
@@ -66,7 +45,6 @@
                     <h1 class="sub-title"><span>Anuncios e Perguntas</span></h1>
                     <div class="relatorio-lista">
                         <div>
-<<<<<<< HEAD
                             <h2>Criar anuncio</h2>
                             <p>Tem algo para vender ou divulgar? No Mercado FIPP, anunciar é rápido e fácil!
                                 Basta escolher a categoria ideal, preencher as informações do seu produto ou serviço,
@@ -82,31 +60,6 @@
                                 desinfecção. Águas mais frias tendem a retardar esses processos, enquanto águas mais
                                 quentes aceleram as reações.</p>
                             <button class="btn-box" style="margin-top: 10px;">BUSCAR</button>
-=======
-                            <h2>Excluir categoria</h2>
-                            <p>Se você deseja remover uma categoria do sistema, utilize o botão abaixo. Essa ação é recomendada apenas quando a categoria não for mais necessária ou estiver em desuso, pois ao excluí-la, todos os vínculos com anúncios ou dados relacionados serão perdidos.
-                            <br>
-                            ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
-                            Clique no botão abaixo para prosseguir com a exclusão da categoria.</p>
-                            <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">EXCLUIR CATEGORIA</button>
-                            <router-view></router-view>
-                        </div>
-                        <div>
-                            <h2>Excluir usuário</h2>
-                            <p>Se você precisa remover um usuário da plataforma, utilize o botão abaixo. Esta funcionalidade é indicada para casos de violação das regras de uso, contas inativas por longos períodos ou a pedido do próprio usuário.
-                            <br>
-                            ⚠️ Atenção: Esta ação é irreversível.
-                            Clique no botão abaixo para confirmar a exclusão do usuário.</p>
-                            <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR USUÁRIO</button>
-                        </div>
-                        <div>
-                            <h2>Excluir anuncio</h2>
-                            <p>Para remover um anúncio da plataforma, clique no botão abaixo. Isso pode ser necessário em casos de conteúdo inadequado, anúncios expirados ou quando não estiverem de acordo com as políticas da plataforma.
-                            <br>
-                            ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
-                            Clique no botão abaixo para excluir o anúncio.</p>
-                            <button class="btn-box" style="margin-top: 10px;">EXCLUIR ANUNCIO</button>
->>>>>>> 5e6f82737e90108774892406dd81b3a183af7941
                         </div>
                     </div>
                 </div>
@@ -114,14 +67,11 @@
         </section>
 
     </body>
-<<<<<<< HEAD
     <!--<div id="menu">
     <div><router-link to="/form-categorias/Categorias">Categoria</router-link></div>
     <div><router-link to="/form-usuario/Usuário">Usuário</router-link></div>
   </div>
    <router-view></router-view>-->
-=======
->>>>>>> 5e6f82737e90108774892406dd81b3a183af7941
 </template>
 
 <script>
