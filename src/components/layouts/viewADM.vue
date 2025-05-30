@@ -54,12 +54,28 @@
                             <router-view></router-view>
                         </div>
                         <div>
+                            <h2>Excluir usuário</h2>
+                            <p>Se você precisa remover um usuário da plataforma, utilize o botão abaixo. Esta funcionalidade é indicada para casos de violação das regras de uso, contas inativas por longos períodos ou a pedido do próprio usuário.
+                            <br>
+                            ⚠️ Atenção: Esta ação é irreversível.
+                            Clique no botão abaixo para confirmar a exclusão do usuário.</p>
+                            <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR USUÁRIO</button>
+                        </div>
+                        <div>
+                            <h2>Excluir anuncio</h2>
+                            <p>Para remover um anúncio da plataforma, clique no botão abaixo. Isso pode ser necessário em casos de conteúdo inadequado, anúncios expirados ou quando não estiverem de acordo com as políticas da plataforma.
+                            <br>
+                            ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
+                            Clique no botão abaixo para excluir o anúncio.</p>
+                            <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR ANUNCIO</button>
+=======
                             <h2>Buscar anuncio e perguntar</h2>
                             <p>No processo de tratamento de água, a temperatura é um fator crítico. Ela afeta a
                                 eficiência das reações químicas e biológicas, como a coagulação, sedimentação e
                                 desinfecção. Águas mais frias tendem a retardar esses processos, enquanto águas mais
                                 quentes aceleram as reações.</p>
                             <button class="btn-box" style="margin-top: 10px;">BUSCAR</button>
+
                         </div>
                     </div>
                 </div>
