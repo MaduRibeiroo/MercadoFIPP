@@ -41,7 +41,7 @@
                             ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                             Clique no botão abaixo para prosseguir com a exclusão da categoria.</p>
                             <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">EXCLUIR CATEGORIA</button>
-                            <router-view></router-view>
+                           
                         </div>
                         <div>
                             <h2>Excluir usuário</h2>
@@ -49,7 +49,7 @@
                             <br>
                             ⚠️ Atenção: Esta ação é irreversível.
                             Clique no botão abaixo para confirmar a exclusão do usuário.</p>
-                            <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR USUÁRIO</button>
+                            <button class="btn-box" style="margin-top: 10px;">EXCLUIR USUÁRIO</button>
                         </div>
                         <div>
                             <h2>Excluir anuncio</h2>
@@ -57,7 +57,7 @@
                             <br>
                             ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                             Clique no botão abaixo para excluir o anúncio.</p>
-                            <button class="btn-box" style="margin-top: 10px;">EXCLUIR ANUNCIO</button>
+                            <button class="btn-box" style="margin-top: 10px;" @click="irParaBuscaAnuncio">EXCLUIR ANUNCIO</button>
                         </div>
                     </div>
                 </div>
@@ -71,15 +71,19 @@
 import FormAnuncio from '../forms/FormAnuncio.vue';
 import FormCategoria from '../forms/FormCategoria.vue';
 import FormUsuario from '../forms/FormUsuario.vue';
+import buscarAnuncios from './buscarAnuncios.vue';
 
 export default {
   name: 'App',
   components: {
-    FormCategoria, FormUsuario, FormAnuncio
+    FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios
   },
   methods: {
     irParaFormAnuncio() {
       this.$router.push('/form-anuncio/anuncio');
+    },
+    irParaBuscaAnuncio(){
+        this.$router.push('/buscarAnuncios');
     }
   }
 }

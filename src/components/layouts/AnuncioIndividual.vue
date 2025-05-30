@@ -9,12 +9,12 @@
     </header>
     <div class="mainContent">
             <div class="top-buttons">
-                <button class="btn-box">Alterar Anuncio</button>
-                <button class="btn-box">Excluir Anuncio</button>
+                <button class="btn-box" @click="alterarAnuncio">Alterar Anuncio</button>
+                <button class="btn-box" @click="excluirAnuncio">Excluir Anuncio</button>
             </div>
             <div v-if="anuncios && anuncios.titulo" class="infos">
                     <h3>{{anuncios.titulo}}</h3>
-                    <p>R$ {{ anuncios.preco }},00</p>
+                    <p>R$ {{ anuncios.preco }}</p>
                     <h6>Descrição do produto</h6>
                     <p>{{ anuncios.descricao}}</p>
             </div>
@@ -24,7 +24,7 @@
                     <input type="text" id="buscar" placeholder="Digite sua pergunta..." v-model="texto">
                     <button id="botaoPesquisar" type="submit">Enviar pergunta</button>
             </form>
-            <div class="perguntasRespostas" v-if="anuncios?.perguntas?.length">
+            <div class="perguntasRespostas" v-if="anuncios && anuncios.perguntas && anuncios.perguntas.length">
                 <div v-for="(per, index) in this.anuncios.perguntas" :key="index" class="pergunta">
                     <h3>{{ per.texto }}</h3>
                     <p v-if="!per.resposta" @click="mostrarInput(index)" style="cursor: pointer; color: blue;">Responder</p>
@@ -55,7 +55,7 @@ export default{
         msg: String
     },
     data(){
-        return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[],respostas: [], respostaVisivel:[], formOn:false,
+        return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[],respostas: [], respostaVisivel:[], mensagem:"", formOn:false,
         anuncios: null}
     },
     created() {
@@ -81,32 +81,37 @@ export default{
         adicionarPergunta(){
             axios.get("http://localhost:8080/apis/anuncio/add-pergunta/"+this.anuncios.id+"/"+this.texto)
             .then(result=>{
-                this.anuncios=result.data;
-                this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
-                    ? this.anuncios.perguntas.map(() => false)
-                    : [];
+                this.carregarDados();
                 this.texto = "";
             }).catch(error=>{
                 alert(error)
             })
         },
         adicionarResposta(index){
-            axios.get("http://localhost:8080/apis/pergunta/add-resposta/"+this.anuncios.perguntas[index].id+"/"+this.respostas[index]).then(result=>{
-                this.anuncios = result.data; // atualiza dados com a resposta nova
-                this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
-                    ? this.anuncios.perguntas.map(() => false)
-                    : [];
-
-                this.respostas = Array.isArray(this.anuncios.perguntas)
-                    ? this.anuncios.perguntas.map(() => "")
-                    : [];
+            axios.get("http://localhost:8080/apis/pergunta/add-resposta", {
+            params: {
+                id: this.anuncios.perguntas[index].id,
+                texto: this.respostas[index]
+            }
+        }).then(result=>{
+                this.carregarDados();
             }).catch(error=>{
                 alert(error)
             })
         },
         mostrarInput(index) {
-            this.$set(this.respostaVisivel, index, true); 
+            this.respostaVisivel[index] = true;
         },
+        excluirAnuncio(){
+            if(confirm("Deseja realmente excluir o anúncio: " + this.anuncios.titulo + "?")){
+            axios.delete("http://localhost:8080/apis/anuncio/"+this.id).then(result=>{
+              this.mensagem="Anuncio excluido com sucesso";
+              this.$router.push("/buscarAnuncios");
+            }).catch(error=>{
+                alert(error)
+            })
+          }
+        }
     }
 }
 </script>
