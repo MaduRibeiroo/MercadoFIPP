@@ -23,7 +23,7 @@
             <span class="home-imgHover"></span>
         </section>
 
-        <section style="margin-top: 100px;" class="sobre" id="id-sobre">
+        <section style="margin-top: -150px;" class="sobre" id="id-sobre">
             <div class="sobre-img">
                 <img src="../../assets/lobo.png">
             </div>
@@ -42,16 +42,15 @@
         <section>
             <div class="relatorio" id="id-relatorio">
                 <div class="container">
-                    <h1 class="sub-title"><span>Anuncios e Perguntas</span></h1>
+                    <h1 class="sub-title"><span>Exclusão</span></h1>
                     <div class="relatorio-lista">
                         <div>
-                            <h2>Criar anuncio</h2>
-                            <p>Tem algo para vender ou divulgar? No Mercado FIPP, anunciar é rápido e fácil!
-                                Basta escolher a categoria ideal, preencher as informações do seu produto ou serviço,
-                                adicionar fotos e publicar. Quanto mais detalhado for seu anúncio, maiores as chances de
-                                atrair compradores interessados</p>
+                            <h2>Excluir categoria</h2>
+                            <p>Se você deseja remover uma categoria do sistema, utilize o botão abaixo. Essa ação é recomendada apenas quando a categoria não for mais necessária ou estiver em desuso, pois ao excluí-la, todos os vínculos com anúncios ou dados relacionados serão perdidos.
+                            <br>
+                            ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
+                            Clique no botão abaixo para prosseguir com a exclusão da categoria.</p>
                             <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">CRIAR</button>
-                            <router-view></router-view>
                         </div>
                         <div>
                             <h2>Excluir usuário</h2>
@@ -68,14 +67,6 @@
                             ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                             Clique no botão abaixo para excluir o anúncio.</p>
                             <button class="btn-box" style="margin-top: 10px;" @click="">EXCLUIR ANUNCIO</button>
-=======
-                            <h2>Buscar anuncio e perguntar</h2>
-                            <p>No processo de tratamento de água, a temperatura é um fator crítico. Ela afeta a
-                                eficiência das reações químicas e biológicas, como a coagulação, sedimentação e
-                                desinfecção. Águas mais frias tendem a retardar esses processos, enquanto águas mais
-                                quentes aceleram as reações.</p>
-                            <button class="btn-box" style="margin-top: 10px;">BUSCAR</button>
-
                         </div>
                     </div>
                 </div>

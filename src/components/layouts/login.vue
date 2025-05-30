@@ -60,37 +60,6 @@
                   </div>   
                 </div>
               </form>
-=======
-            <form @submit.prevent="login">
-              <div class="wrapper">
-                <div class="card-switch">
-                    <label class="switch">
-                      <input type="checkbox" class="toggle">
-                      <span class="slider"></span>
-                      <span class="card-side"></span>
-                      <div class="flip-card__inner">
-                          <div class="flip-card__front">
-                            <div class="title">Log in</div>
-                            <form class="flip-card__form" action="">
-                                <input class="flip-card__input"  id="nome" v-model="nome" placeholder="Nome" type="nome">
-                                <input class="flip-card__input" name="senha" placeholder="Senha" type="password">
-                                <button class="flip-card__btn" @click="login">Logar!</button>
-                            </form>
-                          </div>
-                          <div class="flip-card__back">
-                            <div class="title">Cadastrar</div>
-                            <form class="flip-card__form" action="">
-                                <input class="flip-card__input" id="nome" v-model="nome" placeholder="Nome" type="nome">
-                                <input class="flip-card__input" name="senha" placeholder="Senha" type="password">
-                                <button class="flip-card__btn" @click="cadastrarUsuario">Cadastrar!</button>
-                            </form>
-                          </div>
-                      </div>
-                    </label>
-                </div>   
-              </div>
-            </form>
->>>>>>> 5e6f82737e90108774892406dd81b3a183af7941
           </div>
         </div>
       </div>
