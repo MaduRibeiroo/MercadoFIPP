@@ -8,8 +8,10 @@
             </nav>
     </header>
     <div class="mainContent">
-            <button>Alterar Anuncio</button>
-            <button>Excluir Anuncio</button>
+            <div class="top-buttons">
+                <button class="btn-box">Alterar Anuncio</button>
+                <button class="btn-box">Excluir Anuncio</button>
+            </div>
             <div v-if="anuncios && anuncios.titulo" class="infos">
                     <h3>{{anuncios.titulo}}</h3>
                     <p>R$ {{ anuncios.preco }},00</p>
@@ -18,6 +20,7 @@
             </div>
         <div class="interacao">
             <form class="form-pesquisa" @submit.prevent="adicionarPergunta">
+                    <p>Envie a sua pergunta aqui</p>
                     <input type="text" id="buscar" placeholder="Digite sua pergunta..." v-model="texto">
                     <button id="botaoPesquisar" type="submit">Enviar pergunta</button>
             </form>
@@ -33,7 +36,10 @@
                     />
                     <button @click="adicionarResposta(index)">Enviar</button>
                     </div>
-                    <h3 v-if="per.resposta">{{ per.resposta }}</h3>
+                    <div v-if="per.resposta" class="resposta-bloco">
+                        <p class="resposta-label">Resposta</p>
+                        <h3 class="resposta-texto">{{ per.resposta }}</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,8 +67,13 @@ export default{
             axios.get("http://localhost:8080/apis/anuncio/"+this.id)
             .then(result=>{
                 this.anuncios=result.data;
-                this.respostaVisivel = this.anuncios.perguntas.map(() => false); 
-                this.respostas = this.anuncios.perguntas.map(() => "");
+                this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
+                    ? this.anuncios.perguntas.map(() => false)
+                    : [];
+
+                this.respostas = Array.isArray(this.anuncios.perguntas)
+                    ? this.anuncios.perguntas.map(() => "")
+                    : [];
             }).catch(error=>{
                 alert(error)
             })
@@ -71,7 +82,9 @@ export default{
             axios.get("http://localhost:8080/apis/anuncio/add-pergunta/"+this.anuncios.id+"/"+this.texto)
             .then(result=>{
                 this.anuncios=result.data;
-                this.respostaVisivel = this.anuncios.perguntas.map(() => false);
+                this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
+                    ? this.anuncios.perguntas.map(() => false)
+                    : [];
                 this.texto = "";
             }).catch(error=>{
                 alert(error)
@@ -80,8 +93,13 @@ export default{
         adicionarResposta(index){
             axios.get("http://localhost:8080/apis/pergunta/add-resposta/"+this.anuncios.perguntas[index].id+"/"+this.respostas[index]).then(result=>{
                 this.anuncios = result.data; // atualiza dados com a resposta nova
-                this.respostaVisivel = this.anuncios.perguntas.map(() => false); // oculta inputs
-                this.respostas = this.anuncios.perguntas.map(() => "");
+                this.respostaVisivel = Array.isArray(this.anuncios.perguntas)
+                    ? this.anuncios.perguntas.map(() => false)
+                    : [];
+
+                this.respostas = Array.isArray(this.anuncios.perguntas)
+                    ? this.anuncios.perguntas.map(() => "")
+                    : [];
             }).catch(error=>{
                 alert(error)
             })
@@ -117,43 +135,74 @@ export default{
 
 .mainContent {
   display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  margin-top: 100px; /* Para não ficar atrás do header fixo */
-  padding: 20px;
-  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 20px 40px 20px; /* era 120px, agora 100px */
+  position: relative;
+}
+
+.top-buttons {
+  position: absolute;
+  top: 10px;      /* Adicionado espaço no topo */
+  right: 20px;    /* Botões afastados da direita */
+  display: flex;
+  gap: 15px;      /* Espaço entre os botões */
+}
+
+.btn-box {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: #4c9bcf;
+  border-radius: 40px;
+  font-size: 16px;
+  color: #000;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-weight: 600;
+  opacity: 0;
+  animation: slideLeft 1s ease forwards;
+  animation-delay: 1s;
+  box-shadow: none; /* Removido brilho azul */
 }
 
 /* Quadro do anúncio */
-.infos {
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 45%;
-  color: black;
-}
-
-/* Quadro de interação */
+.infos,
 .interacao {
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 45%;
+  width: 95%; /* aumentou de 90% para 95% */
+  max-width: 1000px; /* aumentou de 800px para 1000px */
+  margin-top: 20px;
   color: black;
 }
 
 .form-pesquisa {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Agora empilha texto + input/botão */
+  align-items: flex-start;
   gap: 10px;
+  margin-bottom: 20px; /* Separação das perguntas abaixo */
+}
+
+.form-pesquisa input,
+.form-pesquisa button {
+  margin-top: 5px;
 }
 
 #buscar {
+  flex: 1; /* faz o input ocupar o maior espaço possível */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  max-width: 600px; /* limita largura para evitar ficar grande demais */
+}
+
+.pergunta h3:last-of-type {
+  margin-left: 30px; /* Indenta a resposta */
+  font-weight: normal;
+  color: #333;
 }
 
 #botaoPesquisar {
@@ -168,5 +217,45 @@ export default{
 
 #botaoPesquisar:hover {
   background-color: #1a1a70;
+}
+
+.pergunta {
+  margin-bottom: 30px; /* Aumenta o espaço entre grupos de pergunta/resposta */
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0; /* Linha para separar visualmente */
+}
+
+.resposta-bloco {
+  margin-top: 8px;
+  margin-left: 30px;
+}
+
+.resposta-label {
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 2px;
+}
+
+.resposta-texto {
+  font-weight: normal;
+  color: #333;
+  margin: 0;
+}
+
+.infos h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.infos p {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.infos h6 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
 }
 </style>
