@@ -41,9 +41,9 @@
                             <div class="flip-card__front">
                               <div class="title">Log in</div>
                               <form class="flip-card__form" action="">
-                                  <input class="flip-card__input" name="nome" placeholder="Nome" type="text">
+                                  <input class="flip-card__input" name="nome" placeholder="Nome" type="nome">
                                   <input class="flip-card__input" name="senha" placeholder="Senha" type="password">
-                                  <button class="flip-card__btn">Let`s go!</button>
+                                  <button class="flip-card__btn" @click="login">Logar!</button>
                               </form>
                             </div>
                             <div class="flip-card__back">
@@ -51,7 +51,7 @@
                               <form class="flip-card__form" action="">
                                   <input class="flip-card__input" id="inputNome" name="nome" placeholder="Nome" type="nome">
                                   <input class="flip-card__input" name="senha" placeholder="Senha" type="password">
-                                  <button class="flip-card__btn">Confirm!</button>
+                                  <button class="flip-card__btn" @click="cadastrarUsuario">Cadastrar!</button>
                               </form>
                             </div>
                         </div>
@@ -122,18 +122,47 @@ export default {
   methods: {
     login() {
       axios.get('http://localhost:8080/apis/usuario')
-        .then(resp => {
-          const usuarios = resp.data;
-          const usuario = usuarios.find(u => u.nome === this.nome && u.senha === this.senha);
-          if (usuario) {
-            localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+      .then(resp => {
+        const usuarios = resp.data;
+        const usuario = usuarios.find(u => u.nome === this.nome && u.senha === this.senha);
+
+        if (usuario) {
+          localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+
+          if (usuario.nivel === 1) {
             this.$router.push('/view-adm/' + usuario.nome);
+          } else if (usuario.nivel === 2 || usuario.nivel === 3) {
+            this.$router.push('/main-view/' + usuario.nome);
           } else {
-            this.erro = 'Usuário ou senha inválidos.';
+            this.erro = 'Nível de acesso desconhecido.';
           }
+        } else {
+          this.erro = 'Usuário ou senha inválidos.';
+        }
+      })
+      .catch(() => {
+        this.erro = 'Erro ao conectar ao servidor.';
+      });
+    },
+
+    cadastrarUsuario() {
+      const novoUsuario = {
+        nome: this.nome,
+        senha: this.senha,
+        nivel: 2  // Define o usuário como nível 2
+      };
+
+      axios.post('http://localhost:8080/apis/usuario', novoUsuario)
+        .then(() => {
+          this.mensagem = 'Usuário cadastrado com sucesso!';
+          this.nome = '';
+          this.senha = '';
         })
-        .catch(() => this.erro = 'Erro ao conectar ao servidor.');
+        .catch(() => {
+          this.erro = 'Erro ao cadastrar usuário. Verifique o servidor.';
+        });
     }
+
   }
 }
 </script>
