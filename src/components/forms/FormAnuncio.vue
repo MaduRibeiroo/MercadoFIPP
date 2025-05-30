@@ -116,16 +116,9 @@ export default {
       this.anuncios.sort((a, b) => a.titulo.localeCompare(b.titulo));
     }
   },
-  mounted() {
-    const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
-
-    if (!usuario || usuario.nivel !== 1) {
-      alert('Acesso negado! Apenas administradores podem acessar esta página.');
-      this.$router.push('/');
-    } else {
+  mounted(){
       this.carregarDados();
     }
-  }
 }
 </script>
 
