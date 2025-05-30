@@ -41,7 +41,7 @@
                               <div class="title">Log in</div>
                               <div class="flip-card__div" action="">
                                   <input class="flip-card__input" v-model="nome" placeholder="Nome" type="nome">
-                                  <input class="flip-card__input" v-model="senha" placeholder="Senha" type="password">
+                                  <input class="flip-card__input" style="margin-top: 20px;" v-model="senha" placeholder="Senha" type="password">
                                   <button class="flip-card__btn" @click="login">Logar!</button>
                               </div>
                             </div>
@@ -49,7 +49,7 @@
                               <div class="title">Cadastrar</div>
                               <div class="flip-card__div" action="">
                                   <input class="flip-card__input" v-model="nome" placeholder="Nome" type="nome">
-                                  <input class="flip-card__input" v-model="senha" placeholder="Senha" type="password">
+                                  <input class="flip-card__input" style="margin-top: 20px;" v-model="senha" placeholder="Senha" type="password">
                                   <button class="flip-card__btn" @click="cadastrarUsuario">Cadastrar!</button>
                               </div>
                             </div>

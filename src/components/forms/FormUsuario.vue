@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
+    <a href="#" class="logo"><router-link to="/view-adm">Mercado FIPP</router-link></a>
 
     <nav class="navbarra">
       <a style="--i:2">USUARIO</a>

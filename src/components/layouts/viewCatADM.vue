@@ -26,12 +26,15 @@
           <tr>
             <th>Id</th>
             <th @click="ordenarNome()">Nome</th>
+            <th colspan="2">Ações</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="cat in this.categorias">
-            <td>{{ cat.id }}</td>
-            <td>{{ cat.nome }}</td>
+            <td>{{cat.id}}</td>
+            <td>{{cat.nome}}</td>
+            <td><button @click="this.alterar(cat.id)">Alterar</button></td>
+            <td><button @click="this.apagar(cat.id)">Apagar</button></td>
           </tr>
         </tbody>
       </table>
@@ -40,6 +43,7 @@
 </template>
 
 <script>
+
 import axios from 'axios'
 
 export default {

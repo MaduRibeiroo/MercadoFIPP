@@ -229,11 +229,11 @@ div {
 }
 
 #add tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #91a1ff;
 }
 
 #add tr:hover {
-  background-color: #ddd;
+  background-color: #1212;
 }
 
 #add th {

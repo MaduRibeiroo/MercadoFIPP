@@ -5,7 +5,7 @@
             <a href="#" class="logo">Mercado FIPP</a>
 
             <nav class="navbarra">
-                <a style="--i:2">ADMIN</a>
+                <a style="--i:2"><RouterLink to="/">ADMIN</RouterLink></a>
             </nav>
         </header>
         <section class="home" id="id-home">
@@ -29,7 +29,7 @@
                     total controle e gestão sobre os principais elementos da plataforma, garantindo segurança,
                     organização e eficiência no gerenciamento de dados.</p>
                 <p style="margin-top: -30px;">Deseja verificar quais as categorias existentes?</p>
-                <a class="btn-box" @click="irCategoriaADM">CATEGORIA</a>
+                <button class="btn-box" @click="irCategoriaADM">CATEGORIA</button>
             </div>
         </section>
 
@@ -47,7 +47,7 @@
                                 ⚠️ Atenção: Esta ação é permanente e não poderá ser desfeita.
                                 Clique no botão abaixo para prosseguir com a exclusão da categoria.
                             </p>
-                            <button class="btn-box" style="margin-top: 10px;" @click="irParaFormAnuncio">EXCLUIR
+                            <button class="btn-box" style="margin-top: 10px;" @click="irCategoriaADM">EXCLUIR
                                 CATEGORIA</button>
 
                         </div>
@@ -88,6 +88,7 @@ import FormAnuncio from '../forms/FormAnuncio.vue';
 import FormCategoria from '../forms/FormCategoria.vue';
 import FormUsuario from '../forms/FormUsuario.vue';
 import buscarAnuncios from './buscarAnuncios.vue';
+import viewCatADM from './viewCatADM.vue';
 
 export default {
     name: 'MenuAdm',
@@ -109,17 +110,20 @@ export default {
         this.nivel = this.$route.query.nivel;
     },
     components: {
-        FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios
+        FormCategoria, FormUsuario, FormAnuncio, buscarAnuncios, viewCatADM
     },
-    irParaBuscaAnuncio(){
-        this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});
-    },
-    irCategoriaADM() {
-      this.$router.push('/view-categoria-adm');
-    },
-    excluirUsuario(){
-        this.$router.push('/form-usuario/usuario');
+    methods: {
+        irParaBuscaAnuncio(){
+            this.$router.push({name: "BuscarAnuncios" , query: { nivel: this.nivel }});
+        },
+        irCategoriaADM() {
+        this.$router.push('/view-categoria-adm');
+        },
+        excluirUsuario(){
+            this.$router.push('/form-usuario/usuario');
+        }
     }
+    
 }
 </script>
 
