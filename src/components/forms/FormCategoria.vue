@@ -1,4 +1,11 @@
 <template>
+  <header class="header">
+    <a href="#" class="logo"><router-link to="/Menu">Mercado FIPP</router-link></a>
+
+    <nav class="navbarra">
+      <a style="--i:2">USUARIO</a>
+    </nav>
+  </header>
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div v-if="formOn">
@@ -157,4 +164,43 @@ div {
   background-color: #04AA6D;
   color: white;
 }
+
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 10px;
+    background-color: #000143;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;}
+
+.logo{
+    position: relative;
+    font-size: 25px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: default;
+    opacity: 0;
+    animation: slideRight 1s ease forwards;}
+
+.navbarra a{
+    display: inline-block;
+    font-size: 25px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 35px;
+    transition: slideTop .5s ease forwards;
+    opacity: 0;
+    animation: slideLeft 1s ease forwards;
+    animation-delay: calc(.2s * var(--i))}
+
+.navbarra a:houver{
+    color: #53bafff7;}
+
 </style>

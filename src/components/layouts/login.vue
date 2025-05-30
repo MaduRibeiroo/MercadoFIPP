@@ -30,76 +30,35 @@
           </div>
           <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
             
-              <form @submit.prevent="login">
-                <div class="wrapper">
-                  <div class="card-switch">
-                      <label class="switch">
-                        <input type="checkbox" class="toggle">
-                        <span class="slider"></span>
-                        <span class="card-side"></span>
-                        <div class="flip-card__inner">
-                            <div class="flip-card__front">
-                              <div class="title">Log in</div>
-                              <form class="flip-card__form" action="">
-                                  <input class="flip-card__input" name="nome" placeholder="Nome" type="nome">
-                                  <input class="flip-card__input" name="senha" placeholder="Senha" type="password">
-                                  <button class="flip-card__btn" @click="login">Logar!</button>
-                              </form>
-                            </div>
-                            <div class="flip-card__back">
-                              <div class="title">Cadastrar</div>
-                              <form class="flip-card__form" action="">
-                                  <input class="flip-card__input" id="inputNome" name="nome" placeholder="Nome" type="nome">
-                                  <input class="flip-card__input" name="senha" placeholder="Senha" type="password">
-                                  <button class="flip-card__btn" @click="cadastrarUsuario">Cadastrar!</button>
-                              </form>
-                            </div>
-                        </div>
-                      </label>
-                  </div>   
-                </div>
-              </form>
-          <!--
-                <!-- Senha input 
-                <div class="mb-3">
-                  <label for="inputSenha" class="form-label">Senha</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="inputSenha"
-                    v-model="senha"
-                    placeholder="Digite sua senha"
-                  />
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-lg btn-block">
-                  Sign in
-                </button>
-
-                <div v-if="erro" class="text-danger mt-3">{{ erro }}</div>
-
-                <div class="divider d-flex align-items-center my-4">
-                  <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-                </div>
-
-                <a
-                  class="btn btn-primary btn-lg btn-block mb-2"
-                  style="background-color: #3b5998"
-                  href="#!"
-                  role="button"
-                >
-                  <i class="fab fa-facebook-f me-2"></i>Continuar com Facebook
-                </a>
-                <a
-                  class="btn btn-primary btn-lg btn-block"
-                  style="background-color: #55acee"
-                  href="#!"
-                  role="button"
-                >
-                  <i class="fab fa-twitter me-2"></i>Continuar com Twitter
-                </a>-->
-              
-            
+            <form @submit.prevent="login">
+              <div class="wrapper">
+                <div class="card-switch">
+                    <label class="switch">
+                      <input type="checkbox" class="toggle">
+                      <span class="slider"></span>
+                      <span class="card-side"></span>
+                      <div class="flip-card__inner">
+                          <div class="flip-card__front">
+                            <div class="title">Log in</div>
+                            <form class="flip-card__form" action="">
+                                <input class="flip-card__input"  id="nome" v-model="nome" placeholder="Nome" type="nome">
+                                <input class="flip-card__input" name="senha" placeholder="Senha" type="password">
+                                <button class="flip-card__btn" @click="login">Logar!</button>
+                            </form>
+                          </div>
+                          <div class="flip-card__back">
+                            <div class="title">Cadastrar</div>
+                            <form class="flip-card__form" action="">
+                                <input class="flip-card__input" id="nome" v-model="nome" placeholder="Nome" type="nome">
+                                <input class="flip-card__input" name="senha" placeholder="Senha" type="password">
+                                <button class="flip-card__btn" @click="cadastrarUsuario">Cadastrar!</button>
+                            </form>
+                          </div>
+                      </div>
+                    </label>
+                </div>   
+              </div>
+            </form>
           </div>
         </div>
       </div>
