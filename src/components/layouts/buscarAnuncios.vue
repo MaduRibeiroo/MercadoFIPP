@@ -19,8 +19,17 @@
                 </form>
             </div>
             <div class="divAnuncios">
-                <div v-for="anu in this.anuncios" :key="anu.id" class="cards" >
+                <div v-for="(anu, index) in anuncios" :key="anu.id" class="cards">
                     <h3>{{ anu.titulo}}</h3>
+                    <div class="carousel" v-if="anu.fotos.length > 0">
+                      <button class="btnPrev" @click="prevImage(index)">‹</button>
+                      <img :src="anu.fotos[currentPhotoIndices[anu.id] || 0]" alt="Foto do anúncio" class="carousel-image" />
+                      <button class="btnNext" @click="nextImage(index)">›</button>
+                    </div>
+                    <!-- Se quiser, pode colocar uma imagem padrão quando não tiver fotos -->
+                    <div v-else>
+                      <img src="/caminho/para/imagem-padrao.png" alt="Sem foto" class="carousel-image" />
+                    </div>
                     <h5>{{ anu.descricao}}</h5>
                     <h4>R$ {{ anu.preco }}</h4>
                     <button class="" @click="irParaAnuncioIndividual(anu)">Acessar produto</button>
@@ -41,21 +50,45 @@ export default{
     },
     data(){
       return {id:0, titulo:"", data:"", descricao:"", preco:"", catid:"", catusu:"", perguntas:[], mensagem:"", nivel:0, formOn:false,
-      anuncios:[]}
+      anuncios:[], fotos:[], currentPhotoIndices: {}}
     },
     created() {
         this.nivel = this.$route.query.nivel; 
         this.carregarDados();
     },
     methods:{
-        carregarDados(){   //ok
-            axios.get("http://localhost:8080/apis/anuncio")
-            .then(result=>{
-                this.anuncios=result.data
-            }).catch(error=>{
-              this.mensagem = "Anuncio nao encontrado";
-            })
+        carregarDados() {
+          this.mensagem = "";
+          axios.get("http://localhost:8080/apis/anuncio")
+          .then(result => {
+            this.anuncios = result.data;
+
+            this.anuncios.forEach((anu) => {
+              if (!Array.isArray(anu.fotos)) {
+                this.$set(anu, 'fotos', []);  // cria array vazio se não tiver fotos
+              }
+              this.$set(this.currentPhotoIndices, anu.id, 0);
+            });
+          }).catch(error => {
+            this.mensagem = "Anúncio não encontrado";
+          });
         },
+        prevImage(anuncioIndex) {
+    const anu = this.anuncios[anuncioIndex];
+    if (!anu.fotos || anu.fotos.length === 0) return;
+
+    let currentIndex = this.currentPhotoIndices[anu.id] || 0;
+    currentIndex = (currentIndex - 1 + anu.fotos.length) % anu.fotos.length;
+    this.$set(this.currentPhotoIndices, anu.id, currentIndex);
+  },
+  nextImage(anuncioIndex) {
+    const anu = this.anuncios[anuncioIndex];
+    if (!anu.fotos || anu.fotos.length === 0) return;
+
+    let currentIndex = this.currentPhotoIndices[anu.id] || 0;
+    currentIndex = (currentIndex + 1) % anu.fotos.length;
+    this.$set(this.currentPhotoIndices, anu.id, currentIndex);
+  },
         buscarTitulo(){
             axios.get("http://localhost:8080/apis/anuncio/buscarTitulo", {
               params: {
@@ -63,10 +96,15 @@ export default{
               }
             })
             .then(result=>{
-                this.anuncios=result.data;
-                this.mensagem="";
-            }).catch(error=>{
-                this.mensagem = "Anuncio nao encontrado";
+              this.anuncios = result.data;
+              if(this.anuncios.length === 0){
+                this.mensagem = "Anúncio não encontrado";
+              } else {
+                this.mensagem = "";
+              }
+            })
+            .catch(error=>{
+              this.mensagem = "Erro na busca. Tente novamente.";
             })
         },
         irParaAnuncioIndividual(anuncio) {
@@ -106,6 +144,50 @@ body {
   padding-top: 80px;
   font-size: 14px;
 
+}
+
+.carousel {
+  position: relative;
+  width: 250px;
+  height: 150px;
+  margin: 0 auto 15px auto;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.carousel-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+.btnPrev, .btnNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.3);
+  color: white;
+  border: none;
+  font-size: 24px;
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.btnPrev:hover, .btnNext:hover {
+  background-color: rgba(0,0,0,0.6);
+}
+
+.btnPrev {
+  left: 5px;
+}
+
+.btnNext {
+  right: 5px;
 }
 
 .header {

@@ -26,6 +26,16 @@
         <label for="price">Preço</label>
         <input type="text" id="price" v-model="preco" placeholder="Preço..">
 
+        <label for="imagem">Imagem</label>
+        <input type="file" multiple @change="handleFiles" accept="image/*"/>
+    
+        <div v-if="fotosSelecionadas.length">
+          <p><strong>Arquivos selecionados:</strong></p>
+          <ul>
+            <li v-for="(foto, index) in fotosSelecionadas" :key="index">{{ foto.name }}</li>
+          </ul>
+        </div>
+
         <label for="idcat">Id categoria</label>
         <input type="number" id="idcat" v-model="catid" placeholder="Id da categoria..">
         <label for="idusu">Id do usuario</label>
@@ -74,8 +84,7 @@ export default {
   name: 'FormAnuncio',
   data() {
     return {
-      id: 0, titulo: "", data: "", descricao: "", preco: "", catid: 0, usrid: 0, nivel:0, modoAlterar: false, formOn: false,
-      anuncios: []
+      id: 0, titulo: "", data: "", descricao: "", preco: "", catid: 0, usrid: 0, nivel:0, modoAlterar: false, formOn: false, anuncios: [], fotosSelecionadas: []
     }
   },
   created(){
@@ -93,27 +102,41 @@ export default {
     }
   },
   gravar() {
-    const url = 'http://localhost:8080/apis/anuncio';
-    const data = {
-      // id pode ser 0 ou null para novo registro
-      id: this.id || null,
-      titulo: this.titulo,
-      data: this.data ? new Date(this.data).toISOString().substring(0, 10) : null,
-      descricao: this.descricao,
-      preco: this.preco,
-      catid: this.catid,
-      usrid: this.usrid
-    };
-    axios.post(url, data)
-      .then(response => {
-        this.carregarDados();
-      })
-      .catch(error => {
-        console.error('Erro ao gravar anúncio:', error.response || error);
-        alert('Erro ao gravar anúncio');
-      });
+  const url = 'http://localhost:8080/apis/anuncio';
+  const formData = new FormData();
+
+  // Adiciona os dados do anúncio como um JSON convertido para Blob
+  const anuncio = {
+    id: this.id || null,
+    titulo: this.titulo,
+    data: this.data ? new Date(this.data).toISOString().substring(0, 10) : null,
+    descricao: this.descricao,
+    preco: this.preco,
+    catid: this.catid,
+    usrid: this.usrid
+  };
+
+  formData.append('anuncio', new Blob([JSON.stringify(anuncio)], { type: 'application/json' }));
+
+  // Adiciona as imagens selecionadas
+  this.fotosSelecionadas.forEach(foto => {
+    formData.append('fotos', foto); // Mesmo nome "fotos" para o backend reconhecer como lista
+  });
+
+  axios.post(url, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+  .then(response => {
+    this.carregarDados();
     this.mostrarForm(false);
-  },
+  })
+  .catch(error => {
+    console.error('Erro ao gravar anúncio:', error.response || error);
+    alert('Erro ao gravar anúncio');
+  });
+},
   apagar(id) {
     axios.delete("http://localhost:8080/apis/anuncio/" + id)
       .then(() => this.carregarDados())
@@ -175,11 +198,14 @@ export default {
   },
   ordenarTitulo() {
     this.anuncios.sort((a, b) => a.titulo.localeCompare(b.titulo));
+  },
+  handleFiles(event){
+    this.fotosSelecionadas = Array.from(event.target.files); //converte FileList para array
   }
 },
   mounted(){
       this.carregarDados();
-    }
+  }
 }
 </script>
 
